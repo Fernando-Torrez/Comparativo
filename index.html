@@ -3,48 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Comparador de Asignaciones</title>
 
 <style>
-
 :root{
-    --bg:#e9edf1;
-    --bg-soft:#f1f3f5;
+    --bg:#101721;
+    --bg-2:#17212d;
+    --panel:rgba(28,39,52,.78);
+    --panel-strong:rgba(34,46,61,.94);
+    --panel-soft:rgba(255,255,255,.055);
 
-    --surface:#ffffff;
-    --surface-alt:#f8f9fa;
+    --border:rgba(255,255,255,.09);
+    --border-strong:rgba(255,255,255,.14);
 
-    --navy:#172a3f;
-    --navy-2:#223c59;
-    --navy-3:#315171;
+    --text:#f2f5f8;
+    --text-soft:#aeb8c4;
+    --text-muted:#7f8b99;
 
-    --gold:#b49a6a;
-    --gold-soft:#f1ece3;
+    --blue:#6da8ff;
+    --blue-strong:#3478f6;
+    --blue-soft:rgba(52,120,246,.14);
 
-    --text:#172331;
-    --muted:#667281;
-    --muted-2:#8c96a2;
+    --gold:#d3b478;
+    --gold-soft:rgba(211,180,120,.13);
 
-    --border:#d9dfe5;
-    --border-soft:#e8ecef;
+    --green:#61c49a;
+    --green-soft:rgba(97,196,154,.13);
 
-    --green:#3b785f;
-    --green-soft:#edf6f1;
+    --red:#e47d7d;
+    --red-soft:rgba(228,125,125,.13);
 
-    --red:#a34f4f;
-    --red-soft:#faeeee;
+    --purple:#a995e8;
+    --purple-soft:rgba(169,149,232,.13);
 
-    --purple:#655d82;
-    --purple-soft:#f1eef7;
+    --amber:#e5b66f;
+    --amber-soft:rgba(229,182,111,.13);
 
-    --amber:#957044;
-    --amber-soft:#f8f2ea;
+    --shadow:0 24px 60px rgba(0,0,0,.28);
+    --shadow-soft:0 14px 34px rgba(0,0,0,.18);
 
-    --shadow-sm:0 6px 18px rgba(20,38,58,.05);
-    --shadow-md:0 14px 34px rgba(20,38,58,.08);
-
-    --radius:18px;
+    --radius-xl:28px;
+    --radius-lg:22px;
+    --radius-md:16px;
     --radius-sm:12px;
 }
 
@@ -59,12 +59,21 @@ html{
 body{
     margin:0;
     min-height:100vh;
-    font-family:Inter, "Segoe UI", Arial, sans-serif;
     color:var(--text);
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Segoe UI",
+        sans-serif;
 
     background:
-        radial-gradient(circle at 0% 0%, rgba(180,154,106,.08), transparent 28rem),
-        linear-gradient(180deg,#edf1f4 0%,#e6eaee 100%);
+        radial-gradient(circle at 15% 10%, rgba(52,120,246,.18), transparent 26rem),
+        radial-gradient(circle at 85% 15%, rgba(211,180,120,.08), transparent 24rem),
+        radial-gradient(circle at 50% 100%, rgba(78,103,135,.16), transparent 30rem),
+        linear-gradient(160deg,#0f1620,#141e29 45%,#111821);
+
+    background-attachment:fixed;
 }
 
 button,
@@ -82,7 +91,6 @@ button{
     margin:auto;
 }
 
-
 /* =========================================================
    HEADER
 ========================================================= */
@@ -92,14 +100,21 @@ button{
     top:0;
     z-index:100;
 
-    background:rgba(248,249,250,.90);
-    backdrop-filter:blur(16px);
+    background:rgba(15,23,33,.68);
 
-    border-bottom:1px solid rgba(217,223,229,.9);
+    backdrop-filter:
+        blur(24px)
+        saturate(150%);
+
+    -webkit-backdrop-filter:
+        blur(24px)
+        saturate(150%);
+
+    border-bottom:1px solid var(--border);
 }
 
 .topbar-inner{
-    height:72px;
+    min-height:72px;
 
     display:flex;
     align-items:center;
@@ -111,238 +126,274 @@ button{
 .brand{
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:13px;
 }
 
 .brand-icon{
-    width:44px;
-    height:44px;
+    width:45px;
+    height:45px;
 
     display:grid;
     place-items:center;
 
-    border-radius:13px;
-
-    color:white;
+    border-radius:14px;
 
     background:
         linear-gradient(
-            135deg,
-            var(--navy),
-            var(--navy-3)
+            145deg,
+            rgba(109,168,255,.95),
+            rgba(52,120,246,.70)
         );
 
     box-shadow:
-        0 10px 22px rgba(23,42,63,.18);
+        0 10px 30px rgba(52,120,246,.28),
+        inset 0 1px 0 rgba(255,255,255,.28);
+
+    position:relative;
+    overflow:hidden;
+}
+
+.brand-icon::after{
+    content:"";
+    position:absolute;
+    inset:1px;
+    border-radius:13px;
+    border:1px solid rgba(255,255,255,.14);
 }
 
 .brand-icon svg{
     width:22px;
     height:22px;
+    color:white;
 }
 
-.brand-name{
-    font-size:23px;
-    font-weight:800;
+.brand-title{
+    font-size:22px;
+    font-weight:750;
     letter-spacing:-.025em;
 }
 
-.brand-sub{
+.brand-subtitle{
     margin-top:2px;
-
-    color:var(--muted);
-
+    color:var(--text-soft);
     font-size:12px;
 }
 
-.security{
+.secure-pill{
     display:flex;
     align-items:center;
     gap:8px;
 
     padding:8px 12px;
 
-    border:1px solid var(--border);
-
     border-radius:999px;
 
-    background:rgba(255,255,255,.65);
+    background:
+        rgba(255,255,255,.055);
 
-    color:var(--muted);
+    border:
+        1px solid var(--border);
+
+    color:var(--text-soft);
 
     font-size:12px;
-    font-weight:700;
+    font-weight:650;
 }
 
-.security-dot{
+.secure-dot{
     width:7px;
     height:7px;
 
     border-radius:50%;
 
     background:var(--green);
-}
 
+    box-shadow:
+        0 0 0 4px rgba(97,196,154,.09);
+}
 
 /* =========================================================
    MAIN
 ========================================================= */
 
 main{
-    padding:20px 0 40px;
+    padding:20px 0 44px;
 }
 
-
 /* =========================================================
-   INTRO COMPACTO
+   INTRO
 ========================================================= */
 
 .intro{
-    display:flex;
-
-    align-items:center;
-    justify-content:space-between;
-
-    gap:20px;
-
-    padding:16px 19px;
-
     margin-bottom:16px;
-
-    border:1px solid var(--border);
-
-    border-radius:16px;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,.92),
-            rgba(248,249,250,.95)
-        );
-
-    box-shadow:var(--shadow-sm);
-}
-
-.intro-title{
-    font-size:19px;
-    font-weight:800;
-
-    margin-bottom:4px;
-}
-
-.intro-text{
-    color:var(--muted);
-
-    font-size:13px;
-
-    line-height:1.5;
-}
-
-.tip{
-    flex:0 0 auto;
-
-    padding:8px 11px;
-
-    border-radius:10px;
-
-    background:var(--gold-soft);
-
-    color:#715d39;
-
-    border:1px solid #e5dac6;
-
-    font-size:11px;
-    font-weight:750;
-}
-
-
-/* =========================================================
-   INPUTS
-========================================================= */
-
-.compare-grid{
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:16px;
-}
-
-.panel{
-    background:
-        linear-gradient(
-            180deg,
-            #ffffff 0%,
-            #f8f9fa 100%
-        );
-
-    border:1px solid var(--border);
-
-    border-radius:var(--radius);
-
-    box-shadow:var(--shadow-sm);
-
-    overflow:hidden;
-}
-
-.panel-head{
-    min-height:70px;
 
     padding:16px 18px;
 
     display:flex;
+    justify-content:space-between;
+    align-items:center;
 
+    gap:20px;
+
+    border-radius:20px;
+
+    border:1px solid var(--border);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.065),
+            rgba(255,255,255,.035)
+        );
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:var(--shadow-soft);
+}
+
+.intro h1{
+    margin:0 0 4px;
+
+    font-size:21px;
+    font-weight:760;
+
+    letter-spacing:-.025em;
+}
+
+.intro p{
+    margin:0;
+
+    color:var(--text-soft);
+
+    font-size:13px;
+    line-height:1.55;
+}
+
+.intro-chip{
+    flex:0 0 auto;
+
+    padding:8px 12px;
+
+    border-radius:999px;
+
+    color:#ead8b4;
+
+    background:var(--gold-soft);
+
+    border:1px solid rgba(211,180,120,.18);
+
+    font-size:11px;
+    font-weight:700;
+}
+
+/* =========================================================
+   INPUT GRID
+========================================================= */
+
+.input-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:16px;
+}
+
+.glass-card{
+    position:relative;
+    overflow:hidden;
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-xl);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(37,50,65,.88),
+            rgba(25,35,47,.78)
+        );
+
+    backdrop-filter:
+        blur(22px)
+        saturate(130%);
+
+    box-shadow:var(--shadow-soft);
+}
+
+.glass-card::before{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    top:0;
+
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.22),
+            transparent
+        );
+}
+
+.input-head{
+    padding:16px 18px;
+
+    display:flex;
     justify-content:space-between;
     align-items:center;
 
     gap:14px;
 
-    border-bottom:
-        1px solid var(--border-soft);
+    border-bottom:1px solid var(--border);
 }
 
-.panel-title-row{
+.title-row{
     display:flex;
-
     align-items:center;
-
-    gap:11px;
+    gap:12px;
 }
 
-.panel-number{
-    width:34px;
-    height:34px;
+.step{
+    width:36px;
+    height:36px;
 
     display:grid;
     place-items:center;
 
-    flex:0 0 auto;
-
-    border-radius:10px;
-
-    background:var(--navy);
+    border-radius:12px;
 
     color:white;
 
-    font-size:12px;
-    font-weight:800;
+    background:
+        linear-gradient(
+            145deg,
+            #3478f6,
+            #5997ff
+        );
 
     box-shadow:
-        0 6px 14px rgba(23,42,63,.13);
-}
+        0 8px 20px rgba(52,120,246,.20);
 
-.panel-title{
-    font-size:18px;
+    font-size:12px;
     font-weight:800;
-
-    letter-spacing:-.015em;
 }
 
-.panel-description{
+.input-title{
+    font-size:18px;
+    font-weight:750;
+
+    letter-spacing:-.018em;
+}
+
+.input-subtitle{
     margin-top:3px;
 
-    color:var(--muted);
+    color:var(--text-soft);
 
     font-size:12px;
 }
@@ -350,19 +401,22 @@ main{
 .counter{
     padding:7px 10px;
 
-    border-radius:9px;
+    border-radius:999px;
 
-    background:#e9eef3;
+    background:
+        rgba(255,255,255,.065);
 
-    color:var(--navy);
+    border:1px solid var(--border);
 
-    font-size:12px;
-    font-weight:800;
+    color:#d9e2eb;
+
+    font-size:11px;
+    font-weight:700;
 
     white-space:nowrap;
 }
 
-.panel-body{
+.input-body{
     padding:14px;
 }
 
@@ -370,120 +424,123 @@ textarea{
     display:block;
 
     width:100%;
-    height:255px;
+    height:250px;
 
     resize:vertical;
 
-    padding:15px 16px;
+    padding:16px;
 
-    border:1px solid var(--border);
+    border:1px solid rgba(255,255,255,.08);
 
-    border-radius:13px;
+    border-radius:18px;
 
     outline:none;
 
-    color:var(--text);
+    color:#eef3f7;
 
-    background:#f7f8f9;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(9,15,22,.58),
+            rgba(11,18,26,.42)
+        );
 
     font-family:
+        "SFMono-Regular",
         Consolas,
-        "Courier New",
         monospace;
 
     font-size:14px;
-
-    line-height:1.6;
-
-    transition:.2s ease;
+    line-height:1.65;
 
     box-shadow:
-        inset 0 2px 6px rgba(20,38,58,.025);
+        inset 0 4px 14px rgba(0,0,0,.13);
+
+    transition:.22s ease;
 }
 
 textarea:focus{
-    border-color:#b8a47c;
+    border-color:rgba(109,168,255,.45);
 
-    background:#fff;
+    background:
+        rgba(10,17,25,.70);
 
     box-shadow:
-        0 0 0 4px rgba(180,154,106,.09);
+        0 0 0 4px rgba(52,120,246,.09),
+        inset 0 4px 14px rgba(0,0,0,.13);
 }
 
 textarea::placeholder{
-    color:#9da6af;
+    color:#707c89;
 }
 
 .helper{
-    margin-top:8px;
+    margin-top:9px;
 
-    color:var(--muted-2);
+    color:var(--text-muted);
 
     font-size:11px;
-
     line-height:1.45;
 }
 
-
 /* =========================================================
-   ACTION BAR
+   BUTTON AREA
 ========================================================= */
 
-.action-bar{
-    margin:14px 0 18px;
+.actions{
+    margin:14px 0 17px;
 
     padding:11px;
 
     display:flex;
-
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
 
     gap:10px;
 
     flex-wrap:wrap;
 
+    border-radius:18px;
+
     border:1px solid var(--border);
 
-    border-radius:15px;
-
     background:
-        rgba(255,255,255,.78);
+        rgba(27,38,51,.68);
 
-    box-shadow:var(--shadow-sm);
+    backdrop-filter:blur(20px);
+
+    box-shadow:var(--shadow-soft);
 }
 
 .action-group{
     display:flex;
-
     align-items:center;
-
     gap:8px;
-
     flex-wrap:wrap;
 }
 
 .btn{
     min-height:42px;
 
-    display:inline-flex;
+    padding:0 15px;
 
+    display:inline-flex;
     align-items:center;
     justify-content:center;
 
     gap:8px;
 
-    padding:0 15px;
-
     border:none;
 
-    border-radius:11px;
+    border-radius:13px;
 
     font-size:13px;
+    font-weight:720;
 
-    font-weight:800;
-
-    transition:.18s ease;
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
 }
 
 .btn:hover{
@@ -500,74 +557,99 @@ textarea::placeholder{
 
     background:
         linear-gradient(
-            135deg,
-            var(--navy),
-            var(--navy-3)
+            145deg,
+            #3478f6,
+            #5b9bff
         );
 
     box-shadow:
-        0 8px 18px rgba(23,42,63,.16);
+        0 10px 24px rgba(52,120,246,.24),
+        inset 0 1px 0 rgba(255,255,255,.22);
 }
 
-.btn-outline{
-    color:var(--navy);
+.btn-secondary{
+    color:#d9e1e9;
+
+    background:
+        rgba(255,255,255,.065);
 
     border:
         1px solid var(--border);
+}
 
-    background:white;
+.btn-secondary:hover{
+    background:
+        rgba(255,255,255,.09);
 }
 
 .btn-gold{
-    color:#665332;
-
-    border:
-        1px solid #e0d3bd;
+    color:#efd9ad;
 
     background:var(--gold-soft);
+
+    border:
+        1px solid rgba(211,180,120,.17);
 }
 
-
 /* =========================================================
-   EMPTY STATE
+   EMPTY
 ========================================================= */
 
-.empty{
-    min-height:130px;
+.empty-state{
+    min-height:120px;
 
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
+    display:grid;
+    place-items:center;
 
     padding:24px;
 
+    text-align:center;
+
+    border-radius:20px;
+
     border:
         1px dashed
-        #bec7cf;
-
-    border-radius:16px;
+        rgba(255,255,255,.11);
 
     background:
-        rgba(255,255,255,.48);
+        rgba(255,255,255,.025);
 }
 
-.empty strong{
+.empty-icon{
+    width:42px;
+    height:42px;
+
+    margin:
+        0 auto 10px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:14px;
+
+    color:var(--blue);
+
+    background:var(--blue-soft);
+}
+
+.empty-icon svg{
+    width:19px;
+    height:19px;
+}
+
+.empty-state strong{
     display:block;
 
-    margin-bottom:6px;
+    margin-bottom:5px;
 
-    font-size:18px;
+    font-size:16px;
 }
 
-.empty span{
-    color:var(--muted);
+.empty-state span{
+    color:var(--text-soft);
 
-    font-size:13px;
+    font-size:12px;
 }
-
 
 /* =========================================================
    RESULTS
@@ -577,36 +659,32 @@ textarea::placeholder{
     display:none;
 
     animation:
-        fadeUp
-        .4s ease;
+        fadeUp .4s ease;
 }
 
-.results-head{
+.results-header{
     margin:
-        8px
-        0
-        13px;
+        7px 0
+        12px;
 }
 
-.results-head h2{
+.results-header h2{
     margin:0;
 
-    font-size:25px;
+    font-size:24px;
 
     letter-spacing:-.025em;
 }
 
-.results-head p{
+.results-header p{
     margin:
-        4px
-        0
+        4px 0
         0;
 
-    color:var(--muted);
+    color:var(--text-soft);
 
     font-size:12px;
 }
-
 
 /* =========================================================
    METRICS
@@ -620,30 +698,29 @@ textarea::placeholder{
 
     gap:11px;
 
-    margin-bottom:14px;
+    margin-bottom:13px;
 }
 
 .metric{
-    position:relative;
+    min-height:108px;
 
-    overflow:hidden;
+    padding:15px;
 
-    min-height:110px;
-
-    padding:16px;
+    border-radius:18px;
 
     border:1px solid var(--border);
 
-    border-radius:15px;
-
     background:
         linear-gradient(
-            180deg,
-            #fff,
-            #f7f8f9
+            145deg,
+            rgba(37,50,65,.90),
+            rgba(24,34,46,.82)
         );
 
-    box-shadow:var(--shadow-sm);
+    box-shadow:var(--shadow-soft);
+
+    position:relative;
+    overflow:hidden;
 }
 
 .metric::after{
@@ -651,8 +728,8 @@ textarea::placeholder{
 
     position:absolute;
 
-    width:66px;
-    height:66px;
+    width:68px;
+    height:68px;
 
     right:-27px;
     top:-27px;
@@ -661,39 +738,38 @@ textarea::placeholder{
 
     background:currentColor;
 
-    opacity:.05;
+    opacity:.07;
 }
 
 .metric-label{
-    color:var(--muted);
+    color:var(--text-soft);
 
     font-size:11px;
+    font-weight:650;
 
-    font-weight:700;
-
-    margin-bottom:9px;
+    margin-bottom:8px;
 }
 
-.metric-number{
+.metric-value{
     font-size:31px;
 
     line-height:1;
 
-    font-weight:900;
+    font-weight:850;
 
-    letter-spacing:-.035em;
+    letter-spacing:-.04em;
 }
 
 .metric-note{
-    margin-top:7px;
+    margin-top:8px;
 
-    color:var(--muted-2);
+    color:var(--text-muted);
 
-    font-size:10.5px;
+    font-size:10px;
 }
 
 .metric-current{
-    color:var(--navy-3);
+    color:var(--blue);
 }
 
 .metric-new{
@@ -712,7 +788,6 @@ textarea::placeholder{
     color:var(--amber);
 }
 
-
 /* =========================================================
    SUMMARY
 ========================================================= */
@@ -723,208 +798,197 @@ textarea::placeholder{
     grid-template-columns:
         1.45fr .55fr;
 
-    gap:14px;
+    gap:13px;
 
-    margin-bottom:14px;
+    margin-bottom:13px;
 }
 
 .summary-card{
-    padding:18px;
+    padding:17px;
 
-    border:
-        1px solid var(--border);
+    border-radius:20px;
 
-    border-radius:16px;
+    border:1px solid var(--border);
 
     background:
         linear-gradient(
-            180deg,
-            #fff,
-            #f7f8f9
+            145deg,
+            rgba(36,49,64,.88),
+            rgba(24,34,46,.80)
         );
 
-    box-shadow:var(--shadow-sm);
+    box-shadow:var(--shadow-soft);
 }
 
 .summary-title{
     margin-bottom:3px;
 
-    font-size:16px;
-
-    font-weight:800;
+    font-size:15px;
+    font-weight:750;
 }
 
 .summary-subtitle{
-    margin-bottom:15px;
+    margin-bottom:14px;
 
-    color:var(--muted);
+    color:var(--text-soft);
 
     font-size:11px;
 }
 
-.progress{
-    margin-bottom:12px;
+.bar-item{
+    margin-bottom:11px;
 }
 
-.progress:last-child{
+.bar-item:last-child{
     margin-bottom:0;
 }
 
-.progress-top{
+.bar-top{
     display:flex;
-
     justify-content:space-between;
 
-    gap:15px;
+    gap:10px;
 
     margin-bottom:6px;
 
-    color:var(--muted);
+    color:var(--text-soft);
 
     font-size:11px;
 }
 
-.progress-top strong{
-    color:var(--text);
+.bar-top strong{
+    color:#eaf0f6;
 }
 
-.progress-track{
+.bar-track{
     height:7px;
 
     overflow:hidden;
 
-    background:#e3e8ec;
-
     border-radius:999px;
+
+    background:
+        rgba(255,255,255,.065);
 }
 
-.progress-bar{
-    height:100%;
-
+.bar{
     width:0;
+    height:100%;
 
     border-radius:999px;
 
     transition:
         width
-        .7s ease;
+        .75s
+        cubic-bezier(.22,.61,.36,1);
 }
 
-.progress-current{
-    background:var(--navy-3);
+.bar-current{
+    background:var(--blue);
 }
 
-.progress-new{
+.bar-new{
     background:var(--green);
 }
 
-.progress-removed{
+.bar-removed{
     background:var(--red);
 }
 
-.progress-same{
+.bar-same{
     background:var(--purple);
 }
 
-
-/* VARIATION */
-
-.variation-card{
+.variation{
     display:flex;
 
     flex-direction:column;
 
     justify-content:center;
 
-    color:white;
-
     background:
         radial-gradient(
             circle at 100% 0%,
-            rgba(180,154,106,.18),
+            rgba(211,180,120,.16),
             transparent 10rem
         ),
         linear-gradient(
-            140deg,
-            var(--navy),
-            var(--navy-3)
+            145deg,
+            rgba(49,73,99,.92),
+            rgba(26,39,53,.94)
         );
-
-    box-shadow:var(--shadow-md);
 }
 
 .variation-label{
-    color:#d9cfbd;
+    color:#c7d1dc;
 
     font-size:11px;
-
-    font-weight:750;
+    font-weight:650;
 }
 
 .variation-number{
     margin:
-        7px
-        0
+        7px 0
         3px;
 
-    font-size:40px;
+    font-size:39px;
 
     line-height:1;
 
-    font-weight:900;
+    font-weight:850;
 
     letter-spacing:-.04em;
 }
 
 .variation-percent{
-    color:#e8e0d4;
+    color:#d9c79e;
 
-    font-size:13px;
+    font-size:12px;
 
-    font-weight:750;
+    font-weight:700;
 }
 
 .variation-description{
     margin-top:12px;
 
-    color:#dce2e9;
+    color:var(--text-soft);
 
     font-size:11px;
 
     line-height:1.55;
 }
 
-
 /* =========================================================
-   RESULTS TABLE
+   TABLE
 ========================================================= */
 
 .results-card{
+    border-radius:20px;
+
     overflow:hidden;
 
-    border:
-        1px solid var(--border);
+    border:1px solid var(--border);
 
-    border-radius:16px;
+    background:
+        rgba(26,37,50,.78);
 
-    background:white;
-
-    box-shadow:var(--shadow-sm);
+    box-shadow:var(--shadow-soft);
 }
 
 .toolbar{
-    padding:12px;
+    padding:11px;
 
     display:flex;
 
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
 
-    gap:12px;
+    gap:11px;
 
     flex-wrap:wrap;
 
-    background:#f7f8f9;
+    background:
+        rgba(255,255,255,.025);
 
     border-bottom:
         1px solid var(--border);
@@ -932,46 +996,44 @@ textarea::placeholder{
 
 .tabs{
     display:flex;
-
-    gap:5px;
-
     flex-wrap:wrap;
+    gap:5px;
 }
 
 .tab{
     min-height:34px;
 
-    padding:
-        0
-        11px;
+    padding:0 11px;
+
+    border-radius:10px;
 
     border:1px solid transparent;
 
-    border-radius:9px;
-
-    color:var(--muted);
+    color:var(--text-soft);
 
     background:transparent;
 
     font-size:11px;
-
-    font-weight:800;
+    font-weight:700;
 
     transition:.18s ease;
 }
 
 .tab:hover{
-    color:var(--navy);
+    color:white;
 
-    background:white;
+    background:
+        rgba(255,255,255,.05);
 }
 
 .tab.active{
-    color:var(--navy);
+    color:#eaf2ff;
 
-    border-color:#d3dce4;
+    background:
+        var(--blue-soft);
 
-    background:#e9eef3;
+    border-color:
+        rgba(109,168,255,.16);
 }
 
 .tab span{
@@ -982,67 +1044,69 @@ textarea::placeholder{
 
 .toolbar-right{
     display:flex;
-
     align-items:center;
-
     gap:7px;
 }
 
 .search{
-    width:210px;
-
+    width:205px;
     height:36px;
 
-    padding:
-        0
-        11px;
+    padding:0 11px;
 
     outline:none;
 
+    border-radius:10px;
+
     border:1px solid var(--border);
 
-    border-radius:9px;
+    color:#eef3f7;
 
-    background:white;
-
-    color:var(--text);
+    background:
+        rgba(7,12,18,.34);
 
     font-size:12px;
 }
 
+.search::placeholder{
+    color:#74808d;
+}
+
 .search:focus{
-    border-color:#b8a47c;
+    border-color:
+        rgba(109,168,255,.35);
 
     box-shadow:
         0 0 0 3px
-        rgba(180,154,106,.08);
+        rgba(52,120,246,.08);
 }
 
 .icon-btn{
     width:36px;
     height:36px;
 
-    padding:0;
-
     display:grid;
     place-items:center;
 
-    border:
-        1px solid var(--border);
+    padding:0;
 
-    border-radius:9px;
+    border-radius:10px;
 
-    background:white;
+    border:1px solid var(--border);
 
-    color:var(--muted);
+    color:var(--text-soft);
+
+    background:
+        rgba(255,255,255,.045);
 
     transition:.18s ease;
 }
 
 .icon-btn:hover{
-    color:var(--navy);
+    color:white;
 
-    background:#edf1f4;
+    background:
+        rgba(255,255,255,.08);
 }
 
 .icon-btn svg{
@@ -1051,7 +1115,7 @@ textarea::placeholder{
 }
 
 .table-wrap{
-    max-height:440px;
+    max-height:430px;
 
     overflow:auto;
 }
@@ -1067,9 +1131,9 @@ thead{
 
     top:0;
 
-    z-index:3;
+    z-index:5;
 
-    background:#edf1f4;
+    background:#202d3c;
 }
 
 th{
@@ -1079,7 +1143,7 @@ th{
 
     text-align:left;
 
-    color:var(--muted);
+    color:#8f9baa;
 
     text-transform:uppercase;
 
@@ -1087,7 +1151,7 @@ th{
 
     font-size:9px;
 
-    font-weight:800;
+    font-weight:750;
 
     border-bottom:
         1px solid var(--border);
@@ -1099,32 +1163,37 @@ td{
         15px;
 
     border-bottom:
-        1px solid var(--border-soft);
+        1px solid rgba(255,255,255,.055);
+
+    color:#dce3eb;
 
     font-size:12px;
+}
 
-    color:var(--text);
+tbody tr{
+    transition:.15s ease;
 }
 
 tbody tr:hover{
-    background:#f8fafb;
+    background:
+        rgba(255,255,255,.028);
 }
 
-.row-index{
+.row-number{
     width:60px;
 
-    color:var(--muted-2);
+    color:#778493;
 }
 
 .code{
+    color:#e9eef4;
+
     font-family:
+        "SFMono-Regular",
         Consolas,
-        "Courier New",
         monospace;
 
-    font-weight:700;
-
-    color:var(--navy);
+    font-weight:650;
 }
 
 .status{
@@ -1142,7 +1211,7 @@ tbody tr:hover{
 
     font-size:10px;
 
-    font-weight:800;
+    font-weight:750;
 }
 
 .status::before{
@@ -1158,34 +1227,30 @@ tbody tr:hover{
 
 .status-new{
     color:var(--green);
-
     background:var(--green-soft);
 }
 
 .status-removed{
     color:var(--red);
-
     background:var(--red-soft);
 }
 
 .status-same{
     color:var(--purple);
-
     background:var(--purple-soft);
 }
 
 .status-duplicate{
     color:var(--amber);
-
     background:var(--amber-soft);
 }
 
-.empty-row{
+.empty-table{
     padding:35px !important;
 
     text-align:center;
 
-    color:var(--muted-2);
+    color:var(--text-muted);
 }
 
 .table-footer{
@@ -1195,30 +1260,29 @@ tbody tr:hover{
 
     display:flex;
 
-    align-items:center;
     justify-content:space-between;
 
     gap:10px;
 
-    background:#f7f8f9;
-
-    color:var(--muted);
+    color:var(--text-muted);
 
     font-size:10px;
-}
 
+    background:
+        rgba(255,255,255,.025);
+
+    border-top:
+        1px solid var(--border);
+}
 
 /* =========================================================
    FOOTER
 ========================================================= */
 
-.footer{
+footer{
     margin-top:18px;
 
     padding-top:14px;
-
-    border-top:
-        1px solid rgba(117,129,141,.18);
 
     display:flex;
 
@@ -1226,11 +1290,13 @@ tbody tr:hover{
 
     gap:20px;
 
-    color:var(--muted-2);
+    color:#71808f;
 
     font-size:10px;
-}
 
+    border-top:
+        1px solid var(--border);
+}
 
 /* =========================================================
    TOAST
@@ -1254,38 +1320,36 @@ tbody tr:hover{
 }
 
 .toast{
-    min-width:240px;
+    min-width:250px;
 
     padding:
         12px
         14px;
 
-    border-radius:11px;
+    border-radius:14px;
 
     color:white;
 
-    background:var(--navy);
+    background:
+        rgba(37,50,65,.94);
 
-    box-shadow:
-        0 18px 38px
-        rgba(23,42,63,.22);
+    border:
+        1px solid var(--border);
 
-    font-size:11px;
+    backdrop-filter:blur(20px);
 
-    font-weight:700;
+    box-shadow:var(--shadow);
+
+    font-size:12px;
+
+    font-weight:650;
 
     animation:
-        fadeUp
+        toastIn
         .25s ease;
 }
 
-
-/* =========================================================
-   ANIMATION
-========================================================= */
-
 @keyframes fadeUp{
-
     from{
         opacity:0;
         transform:translateY(8px);
@@ -1295,15 +1359,29 @@ tbody tr:hover{
         opacity:1;
         transform:translateY(0);
     }
-
 }
 
+@keyframes toastIn{
+    from{
+        opacity:0;
+        transform:
+            translateY(10px)
+            scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
 
 /* =========================================================
    RESPONSIVE
 ========================================================= */
 
-@media(max-width:1100px){
+@media(max-width:1080px){
 
     .metrics{
         grid-template-columns:
@@ -1312,13 +1390,9 @@ tbody tr:hover{
 
 }
 
-
 @media(max-width:850px){
 
-    .compare-grid{
-        grid-template-columns:1fr;
-    }
-
+    .input-grid,
     .summary-grid{
         grid-template-columns:1fr;
     }
@@ -1329,48 +1403,42 @@ tbody tr:hover{
 
 }
 
-
 @media(max-width:650px){
 
     .container{
         width:
             min(
-                100% - 20px,
+                calc(100% - 20px),
                 1380px
             );
     }
 
     .topbar-inner{
-        height:66px;
+        min-height:65px;
     }
 
-    .brand-name{
-        font-size:19px;
+    .brand-title{
+        font-size:18px;
     }
 
-    .brand-sub{
-        display:none;
-    }
-
-    .security{
+    .brand-subtitle,
+    .secure-pill{
         display:none;
     }
 
     .intro{
-        align-items:flex-start;
-
         flex-direction:column;
+        align-items:flex-start;
     }
 
     .metrics{
         grid-template-columns:
-            repeat(2,1fr);
+            1fr 1fr;
     }
 
-    .action-bar{
-        flex-direction:column;
-
+    .actions{
         align-items:stretch;
+        flex-direction:column;
     }
 
     .action-group{
@@ -1390,12 +1458,11 @@ tbody tr:hover{
     }
 
     .search{
-        width:100%;
         flex:1;
+        width:auto;
     }
 
 }
-
 
 @media(max-width:440px){
 
@@ -1410,11 +1477,6 @@ tbody tr:hover{
 
 <body>
 
-
-<!-- =========================================================
-     HEADER
-========================================================= -->
-
 <header class="topbar">
 
 <div class="container topbar-inner">
@@ -1423,30 +1485,23 @@ tbody tr:hover{
 
         <div class="brand-icon">
 
-            <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8">
-
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M12 3v18"/>
                 <path d="M5 6h14"/>
                 <path d="M6 6 3 12h6L6 6Z"/>
                 <path d="m18 6-3 6h6l-3-6Z"/>
                 <path d="M7 21h10"/>
-
             </svg>
 
         </div>
 
-
         <div>
 
-            <div class="brand-name">
+            <div class="brand-title">
                 Comparador de Asignaciones
             </div>
 
-            <div class="brand-sub">
+            <div class="brand-subtitle">
                 Control y revisión de movimientos
             </div>
 
@@ -1455,11 +1510,11 @@ tbody tr:hover{
     </div>
 
 
-    <div class="security">
+    <div class="secure-pill">
 
-        <span class="security-dot"></span>
+        <span class="secure-dot"></span>
 
-        Procesamiento privado en el navegador
+        Procesamiento privado
 
     </div>
 
@@ -1472,65 +1527,53 @@ tbody tr:hover{
 <main class="container">
 
 
-<!-- =========================================================
-     INTRO COMPACTO
-========================================================= -->
-
 <section class="intro">
 
     <div>
 
-        <div class="intro-title">
-            Comparación mensual de códigos
-        </div>
+        <h1>
+            Comparación mensual
+        </h1>
 
-        <div class="intro-text">
-
-            Pegue las asignaciones anterior y actual para identificar
-            incorporaciones, eliminaciones, coincidencias y duplicados.
-
-        </div>
+        <p>
+            Pegue ambas asignaciones para identificar rápidamente nuevos,
+            eliminados, coincidencias y duplicados.
+        </p>
 
     </div>
 
 
-    <div class="tip">
-
-        Puede pegar directamente una columna de Excel
-
+    <div class="intro-chip">
+        Compatible con columnas copiadas desde Excel
     </div>
 
 </section>
 
 
 
-<!-- =========================================================
-     INPUTS
-========================================================= -->
-
-<section class="compare-grid">
+<section class="input-grid">
 
 
 <!-- ANTERIOR -->
 
-<article class="panel">
+<article class="glass-card">
 
-    <div class="panel-head">
+    <div class="input-head">
 
-        <div class="panel-title-row">
+        <div class="title-row">
 
-            <div class="panel-number">
+            <div class="step">
                 01
             </div>
 
             <div>
 
-                <div class="panel-title">
+                <div class="input-title">
                     Asignación anterior
                 </div>
 
-                <div class="panel-description">
-                    Base utilizada para la comparación
+                <div class="input-subtitle">
+                    Base para realizar la comparación
                 </div>
 
             </div>
@@ -1551,14 +1594,13 @@ tbody tr:hover{
     </div>
 
 
-    <div class="panel-body">
+    <div class="input-body">
 
         <textarea
             id="previousInput"
             spellcheck="false"
-            placeholder="Pegue los códigos anteriores...
+            placeholder="Pegue aquí los códigos anteriores...
 
-Ejemplo:
 100001
 100002
 100003
@@ -1566,10 +1608,7 @@ Ejemplo:
 
 
         <div class="helper">
-
-            Puede pegar códigos separados por líneas, comas,
-            punto y coma o tabulaciones.
-
+            Puede pegar directamente una columna completa de Excel.
         </div>
 
     </div>
@@ -1580,24 +1619,24 @@ Ejemplo:
 
 <!-- ACTUAL -->
 
-<article class="panel">
+<article class="glass-card">
 
-    <div class="panel-head">
+    <div class="input-head">
 
-        <div class="panel-title-row">
+        <div class="title-row">
 
-            <div class="panel-number">
+            <div class="step">
                 02
             </div>
 
             <div>
 
-                <div class="panel-title">
+                <div class="input-title">
                     Asignación actual
                 </div>
 
-                <div class="panel-description">
-                    Período que desea revisar
+                <div class="input-subtitle">
+                    Listado correspondiente al período actual
                 </div>
 
             </div>
@@ -1618,14 +1657,13 @@ Ejemplo:
     </div>
 
 
-    <div class="panel-body">
+    <div class="input-body">
 
         <textarea
             id="currentInput"
             spellcheck="false"
-            placeholder="Pegue los códigos actuales...
+            placeholder="Pegue aquí los códigos actuales...
 
-Ejemplo:
 100001
 100002
 100005
@@ -1633,10 +1671,7 @@ Ejemplo:
 
 
         <div class="helper">
-
-            Las líneas vacías se omiten automáticamente.
-            Los códigos se mantienen como texto.
-
+            Las líneas vacías se eliminan automáticamente.
         </div>
 
     </div>
@@ -1647,11 +1682,9 @@ Ejemplo:
 
 
 
-<!-- =========================================================
-     ACTION BAR
-========================================================= -->
+<!-- ACTIONS -->
 
-<section class="action-bar">
+<section class="actions">
 
 <div class="action-group">
 
@@ -1659,15 +1692,9 @@ Ejemplo:
         id="compareButton"
         class="btn btn-primary">
 
-        <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2">
-
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M8 7h11l-3-3m3 3-3 3"/>
             <path d="M16 17H5l3 3m-3-3 3-3"/>
-
         </svg>
 
         Comparar asignaciones
@@ -1690,7 +1717,7 @@ Ejemplo:
 
     <button
         id="swapButton"
-        class="btn btn-outline">
+        class="btn btn-secondary">
 
         Intercambiar
 
@@ -1699,7 +1726,7 @@ Ejemplo:
 
     <button
         id="clearButton"
-        class="btn btn-outline">
+        class="btn btn-secondary">
 
         Limpiar
 
@@ -1711,25 +1738,31 @@ Ejemplo:
 
 
 
-<!-- =========================================================
-     EMPTY STATE
-========================================================= -->
+<!-- EMPTY -->
 
 <section
     id="emptyState"
-    class="empty">
+    class="empty-state">
 
     <div>
 
+        <div class="empty-icon">
+
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M6 3h9l4 4v14H6z"/>
+                <path d="M15 3v5h5"/>
+                <path d="M9 13h7"/>
+                <path d="M9 17h5"/>
+            </svg>
+
+        </div>
+
         <strong>
-            Sin comparación activa
+            Lista preparada para comparar
         </strong>
 
         <span>
-
-            Ingrese las dos asignaciones y presione
-            “Comparar asignaciones”.
-
+            Pegue ambas asignaciones y presione “Comparar asignaciones”.
         </span>
 
     </div>
@@ -1738,21 +1771,18 @@ Ejemplo:
 
 
 
-<!-- =========================================================
-     RESULTS
-========================================================= -->
+<!-- RESULTS -->
 
 <section id="results">
 
-
-<div class="results-head">
+<div class="results-header">
 
     <h2>
         Resultado de la comparación
     </h2>
 
     <p>
-        Resumen calculado con base en los códigos únicos encontrados.
+        Resumen de cambios encontrados entre ambas asignaciones.
     </p>
 
 </div>
@@ -1767,15 +1797,13 @@ Ejemplo:
 <article class="metric metric-current">
 
     <div class="metric-label">
-        Asignación actual
+        Actual
     </div>
 
     <div
         id="metricCurrent"
-        class="metric-number">
-
+        class="metric-value">
         0
-
     </div>
 
     <div class="metric-note">
@@ -1794,10 +1822,8 @@ Ejemplo:
 
     <div
         id="metricNew"
-        class="metric-number">
-
+        class="metric-value">
         0
-
     </div>
 
     <div class="metric-note">
@@ -1816,10 +1842,8 @@ Ejemplo:
 
     <div
         id="metricRemoved"
-        class="metric-number">
-
+        class="metric-value">
         0
-
     </div>
 
     <div class="metric-note">
@@ -1838,14 +1862,12 @@ Ejemplo:
 
     <div
         id="metricSame"
-        class="metric-number">
-
+        class="metric-value">
         0
-
     </div>
 
     <div class="metric-note">
-        permanecen en ambos
+        permanecen
     </div>
 
 </article>
@@ -1860,14 +1882,12 @@ Ejemplo:
 
     <div
         id="metricDuplicates"
-        class="metric-number">
-
+        class="metric-value">
         0
-
     </div>
 
     <div class="metric-note">
-        repetidos detectados
+        registros repetidos
     </div>
 
 </article>
@@ -1880,7 +1900,6 @@ Ejemplo:
 
 <div class="summary-grid">
 
-
 <article class="summary-card">
 
     <div class="summary-title">
@@ -1888,113 +1907,61 @@ Ejemplo:
     </div>
 
     <div class="summary-subtitle">
-        Vista proporcional de los movimientos detectados.
+        Vista rápida de los movimientos detectados.
     </div>
 
 
+    <div class="bar-item">
 
-    <div class="progress">
-
-        <div class="progress-top">
-
-            <span>
-                Asignación actual
-            </span>
-
-            <strong id="barCurrentNumber">
-                0
-            </strong>
-
+        <div class="bar-top">
+            <span>Asignación actual</span>
+            <strong id="barCurrentNumber">0</strong>
         </div>
 
-        <div class="progress-track">
-
-            <div
-                id="barCurrent"
-                class="progress-bar progress-current">
-            </div>
-
+        <div class="bar-track">
+            <div id="barCurrent" class="bar bar-current"></div>
         </div>
 
     </div>
 
 
+    <div class="bar-item">
 
-    <div class="progress">
-
-        <div class="progress-top">
-
-            <span>
-                Nuevos
-            </span>
-
-            <strong id="barNewNumber">
-                0
-            </strong>
-
+        <div class="bar-top">
+            <span>Nuevos</span>
+            <strong id="barNewNumber">0</strong>
         </div>
 
-        <div class="progress-track">
-
-            <div
-                id="barNew"
-                class="progress-bar progress-new">
-            </div>
-
+        <div class="bar-track">
+            <div id="barNew" class="bar bar-new"></div>
         </div>
 
     </div>
 
 
+    <div class="bar-item">
 
-    <div class="progress">
-
-        <div class="progress-top">
-
-            <span>
-                Eliminados
-            </span>
-
-            <strong id="barRemovedNumber">
-                0
-            </strong>
-
+        <div class="bar-top">
+            <span>Eliminados</span>
+            <strong id="barRemovedNumber">0</strong>
         </div>
 
-        <div class="progress-track">
-
-            <div
-                id="barRemoved"
-                class="progress-bar progress-removed">
-            </div>
-
+        <div class="bar-track">
+            <div id="barRemoved" class="bar bar-removed"></div>
         </div>
 
     </div>
 
 
+    <div class="bar-item">
 
-    <div class="progress">
-
-        <div class="progress-top">
-
-            <span>
-                Continúan
-            </span>
-
-            <strong id="barSameNumber">
-                0
-            </strong>
-
+        <div class="bar-top">
+            <span>Continúan</span>
+            <strong id="barSameNumber">0</strong>
         </div>
 
-        <div class="progress-track">
-
-            <div
-                id="barSame"
-                class="progress-bar progress-same">
-            </div>
-
+        <div class="bar-track">
+            <div id="barSame" class="bar bar-same"></div>
         </div>
 
     </div>
@@ -2003,7 +1970,7 @@ Ejemplo:
 
 
 
-<article class="summary-card variation-card">
+<article class="summary-card variation">
 
     <div class="variation-label">
         Variación neta
@@ -2039,15 +2006,11 @@ Ejemplo:
 
 
 
-<!-- =========================================================
-     TABLE
-========================================================= -->
+<!-- TABLE -->
 
 <article class="results-card">
 
-
 <div class="toolbar">
-
 
 <div class="tabs">
 
@@ -2056,10 +2019,7 @@ Ejemplo:
         data-tab="new">
 
         Nuevos
-
-        <span id="tabNew">
-            0
-        </span>
+        <span id="tabNew">0</span>
 
     </button>
 
@@ -2069,10 +2029,7 @@ Ejemplo:
         data-tab="removed">
 
         Eliminados
-
-        <span id="tabRemoved">
-            0
-        </span>
+        <span id="tabRemoved">0</span>
 
     </button>
 
@@ -2082,10 +2039,7 @@ Ejemplo:
         data-tab="same">
 
         Continúan
-
-        <span id="tabSame">
-            0
-        </span>
+        <span id="tabSame">0</span>
 
     </button>
 
@@ -2095,10 +2049,7 @@ Ejemplo:
         data-tab="duplicates">
 
         Duplicados
-
-        <span id="tabDuplicates">
-            0
-        </span>
+        <span id="tabDuplicates">0</span>
 
     </button>
 
@@ -2107,11 +2058,8 @@ Ejemplo:
         class="tab"
         data-tab="all">
 
-        Todos actuales
-
-        <span id="tabAll">
-            0
-        </span>
+        Todos
+        <span id="tabAll">0</span>
 
     </button>
 
@@ -2133,22 +2081,9 @@ Ejemplo:
         class="icon-btn"
         title="Copiar resultados">
 
-        <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2">
-
-            <rect
-                x="9"
-                y="9"
-                width="11"
-                height="11"
-                rx="2"/>
-
-            <path
-                d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/>
-
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="11" height="11" rx="2"/>
+            <path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/>
         </svg>
 
     </button>
@@ -2159,16 +2094,10 @@ Ejemplo:
         class="icon-btn"
         title="Descargar CSV">
 
-        <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2">
-
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 3v12"/>
             <path d="m7 10 5 5 5-5"/>
             <path d="M5 21h14"/>
-
         </svg>
 
     </button>
@@ -2186,13 +2115,9 @@ Ejemplo:
 <thead>
 
 <tr>
-
     <th>#</th>
-
     <th>Código</th>
-
     <th>Estado</th>
-
 </tr>
 
 </thead>
@@ -2214,7 +2139,7 @@ Ejemplo:
     </span>
 
     <span>
-        Procesamiento local
+        Comparación procesada localmente
     </span>
 
 </div>
@@ -2225,18 +2150,17 @@ Ejemplo:
 
 
 
-<footer class="footer">
+<footer>
 
     <span>
         Comparador de Asignaciones
     </span>
 
     <span>
-        Los datos ingresados no son enviados a ningún servidor
+        La información permanece en este dispositivo
     </span>
 
 </footer>
-
 
 </main>
 
@@ -2251,16 +2175,11 @@ Ejemplo:
 
 <script>
 
-/* =========================================================
-   ELEMENTOS
-========================================================= */
-
 const previousInput =
     document.getElementById("previousInput");
 
 const currentInput =
     document.getElementById("currentInput");
-
 
 const previousCounter =
     document.getElementById("previousCounter");
@@ -2268,13 +2187,11 @@ const previousCounter =
 const currentCounter =
     document.getElementById("currentCounter");
 
-
 const emptyState =
     document.getElementById("emptyState");
 
 const resultsSection =
     document.getElementById("results");
-
 
 const tableBody =
     document.getElementById("tableBody");
@@ -2282,36 +2199,22 @@ const tableBody =
 const resultCount =
     document.getElementById("resultCount");
 
-
 const searchInput =
     document.getElementById("searchInput");
 
 
-let activeTab =
-    "new";
-
+let activeTab = "new";
 
 let results = {
-
     previous:[],
-
     current:[],
-
     newCodes:[],
-
     removed:[],
-
     same:[],
-
     duplicates:[]
-
 };
 
 
-
-/* =========================================================
-   LEER CÓDIGOS
-========================================================= */
 
 function parseCodes(text){
 
@@ -2319,103 +2222,56 @@ function parseCodes(text){
         return [];
     }
 
-
     return text
-
         .split(/[\n\r\t,;]+/)
-
-        .map(function(code){
-
-            return code.trim();
-
-        })
-
+        .map(code => code.trim())
         .filter(Boolean);
-
 }
 
 
-
-/* =========================================================
-   ÚNICOS
-========================================================= */
 
 function uniqueCodes(codes){
 
-    return [
-        ...new Set(codes)
-    ];
+    return [...new Set(codes)];
 
 }
 
 
 
-/* =========================================================
-   DUPLICADOS
-========================================================= */
-
 function findDuplicates(codes){
 
-    const map =
-        new Map();
+    const map = new Map();
 
-
-    codes.forEach(function(code){
+    codes.forEach(code => {
 
         map.set(
-
             code,
-
             (map.get(code) || 0) + 1
-
         );
 
     });
 
 
-    return [
-        ...map.entries()
-    ]
-
-    .filter(function(item){
-
-        return item[1] > 1;
-
-    })
-
-    .map(function(item){
-
-        return {
-
+    return [...map.entries()]
+        .filter(item => item[1] > 1)
+        .map(item => ({
             code:item[0],
-
             count:item[1]
-
-        };
-
-    });
+        }));
 
 }
 
 
 
-/* =========================================================
-   FORMATO
-========================================================= */
-
-function formatNumber(number){
+function formatNumber(value){
 
     return new Intl.NumberFormat(
         "es-GT"
-    ).format(number);
+    ).format(value);
 
 }
 
 
-
-/* =========================================================
-   CONTADORES
-========================================================= */
 
 function updateCounters(){
 
@@ -2438,23 +2294,6 @@ function updateCounters(){
 
 
 
-previousInput.addEventListener(
-    "input",
-    updateCounters
-);
-
-
-currentInput.addEventListener(
-    "input",
-    updateCounters
-);
-
-
-
-/* =========================================================
-   COMPARAR
-========================================================= */
-
 function compare(){
 
     const previousRaw =
@@ -2475,7 +2314,7 @@ function compare(){
     ){
 
         toast(
-            "Ingrese los códigos antes de realizar la comparación."
+            "Ingrese los códigos antes de comparar."
         );
 
         return;
@@ -2503,86 +2342,67 @@ function compare(){
         new Set(current);
 
 
-
     const newCodes =
-        current.filter(function(code){
-
-            return !previousSet.has(code);
-
-        });
-
+        current.filter(
+            code =>
+                !previousSet.has(code)
+        );
 
 
     const removed =
-        previous.filter(function(code){
-
-            return !currentSet.has(code);
-
-        });
-
+        previous.filter(
+            code =>
+                !currentSet.has(code)
+        );
 
 
     const same =
-        current.filter(function(code){
-
-            return previousSet.has(code);
-
-        });
-
+        current.filter(
+            code =>
+                previousSet.has(code)
+        );
 
 
-    const oldDuplicates =
-        findDuplicates(
-            previousRaw
-        ).map(function(item){
+    const previousDuplicates =
+        findDuplicates(previousRaw)
+        .map(item => ({
 
-            return {
+            code:item.code,
 
-                code:item.code,
+            count:item.count,
 
-                count:item.count,
+            period:"Anterior"
 
-                period:"Anterior"
-
-            };
-
-        });
-
+        }));
 
 
     const currentDuplicates =
-        findDuplicates(
-            currentRaw
-        ).map(function(item){
+        findDuplicates(currentRaw)
+        .map(item => ({
 
-            return {
+            code:item.code,
 
-                code:item.code,
+            count:item.count,
 
-                count:item.count,
+            period:"Actual"
 
-                period:"Actual"
-
-            };
-
-        });
-
+        }));
 
 
     results = {
 
-        previous:previous,
+        previous,
 
-        current:current,
+        current,
 
-        newCodes:newCodes,
+        newCodes,
 
-        removed:removed,
+        removed,
 
-        same:same,
+        same,
 
         duplicates:[
-            ...oldDuplicates,
+            ...previousDuplicates,
             ...currentDuplicates
         ]
 
@@ -2629,17 +2449,13 @@ function compare(){
 
 
 
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
 function updateDashboard(){
-
-    const current =
-        results.current.length;
 
     const previous =
         results.previous.length;
+
+    const current =
+        results.current.length;
 
     const newCount =
         results.newCodes.length;
@@ -2684,7 +2500,6 @@ function updateDashboard(){
     );
 
 
-
     document.getElementById(
         "tabNew"
     ).textContent =
@@ -2713,7 +2528,6 @@ function updateDashboard(){
         "tabAll"
     ).textContent =
         formatNumber(current);
-
 
 
     const max =
@@ -2758,7 +2572,6 @@ function updateDashboard(){
     );
 
 
-
     const difference =
         current - previous;
 
@@ -2773,9 +2586,7 @@ function updateDashboard(){
             (
                 difference /
                 previous
-            )
-            *
-            100;
+            ) * 100;
 
     }
     else if(current > 0){
@@ -2795,7 +2606,6 @@ function updateDashboard(){
         ? "+" + formatNumber(difference)
 
         : formatNumber(difference);
-
 
 
     document.getElementById(
@@ -2821,7 +2631,6 @@ function updateDashboard(){
         +
 
         "% respecto al período anterior";
-
 
 
     const description =
@@ -2853,10 +2662,6 @@ function updateDashboard(){
 
 
 
-/* =========================================================
-   NUMBER ANIMATION
-========================================================= */
-
 function animateNumber(
     id,
     target
@@ -2878,10 +2683,7 @@ function animateNumber(
 
         const progress =
             Math.min(
-                (
-                    now - start
-                )
-                /
+                (now-start) /
                 duration,
                 1
             );
@@ -2890,7 +2692,7 @@ function animateNumber(
         const eased =
             1 -
             Math.pow(
-                1 - progress,
+                1-progress,
                 3
             );
 
@@ -2898,7 +2700,8 @@ function animateNumber(
         element.textContent =
             formatNumber(
                 Math.round(
-                    target * eased
+                    target *
+                    eased
                 )
             );
 
@@ -2922,10 +2725,6 @@ function animateNumber(
 
 
 
-/* =========================================================
-   PROGRESS BAR
-========================================================= */
-
 function setBar(
     barId,
     numberId,
@@ -2947,7 +2746,7 @@ function setBar(
 
         : Math.max(
             2,
-            value / max * 100
+            value/max*100
         );
 
 
@@ -2961,99 +2760,80 @@ function setBar(
         "0%";
 
 
-    setTimeout(function(){
+    setTimeout(
+        () => {
 
-        bar.style.width =
-            percentage + "%";
+            bar.style.width =
+                percentage + "%";
 
-    },80);
+        },
+        90
+    );
 
 }
 
 
 
-/* =========================================================
-   GET ROWS
-========================================================= */
-
 function getRows(){
 
     if(activeTab === "new"){
 
-        return results
-        .newCodes
-        .map(function(code){
+        return results.newCodes.map(
+            code => ({
 
-            return {
-
-                code:code,
+                code,
 
                 status:"Nuevo",
 
                 className:
                     "status-new"
 
-            };
-
-        });
+            })
+        );
 
     }
 
 
-
     if(activeTab === "removed"){
 
-        return results
-        .removed
-        .map(function(code){
+        return results.removed.map(
+            code => ({
 
-            return {
-
-                code:code,
+                code,
 
                 status:"Eliminado",
 
                 className:
                     "status-removed"
 
-            };
-
-        });
+            })
+        );
 
     }
 
 
-
     if(activeTab === "same"){
 
-        return results
-        .same
-        .map(function(code){
+        return results.same.map(
+            code => ({
 
-            return {
-
-                code:code,
+                code,
 
                 status:"Continúa",
 
                 className:
                     "status-same"
 
-            };
-
-        });
+            })
+        );
 
     }
 
 
-
     if(activeTab === "duplicates"){
 
-        return results
-        .duplicates
-        .map(function(item){
-
-            return {
+        return results.duplicates.map(
+            item => ({
 
                 code:item.code,
 
@@ -3065,55 +2845,47 @@ function getRows(){
                 className:
                     "status-duplicate"
 
-            };
-
-        });
+            })
+        );
 
     }
 
 
+    return results.current.map(
+        code => {
 
-    return results
-    .current
-    .map(function(code){
-
-        const isNew =
-            results
-            .newCodes
-            .includes(code);
+            const isNew =
+                results.newCodes
+                .includes(code);
 
 
-        return {
+            return {
 
-            code:code,
+                code,
 
-            status:
-                isNew
-                ? "Nuevo"
-                : "Continúa",
+                status:
+                    isNew
+                    ? "Nuevo"
+                    : "Continúa",
 
-            className:
-                isNew
-                ? "status-new"
-                : "status-same"
+                className:
+                    isNew
+                    ? "status-new"
+                    : "status-same"
 
-        };
+            };
 
-    });
+        }
+    );
 
 }
 
 
 
-/* =========================================================
-   SEARCHED ROWS
-========================================================= */
-
-function filteredRows(){
+function getFilteredRows(){
 
     const search =
-        searchInput
-        .value
+        searchInput.value
         .trim()
         .toLowerCase();
 
@@ -3130,28 +2902,20 @@ function filteredRows(){
 
 
     return rows.filter(
-        function(row){
-
-            return row
-                .code
-                .toLowerCase()
-                .includes(search);
-
-        }
+        row =>
+            row.code
+            .toLowerCase()
+            .includes(search)
     );
 
 }
 
 
 
-/* =========================================================
-   TABLE
-========================================================= */
-
 function renderTable(){
 
     const rows =
-        filteredRows();
+        getFilteredRows();
 
 
     tableBody.innerHTML =
@@ -3161,16 +2925,15 @@ function renderTable(){
     if(rows.length === 0){
 
         tableBody.innerHTML =
-
-            '<tr>' +
-
-            '<td class="empty-row" colspan="3">' +
-
-            'No se encontraron registros en esta categoría.' +
-
-            '</td>' +
-
-            '</tr>';
+            `
+            <tr>
+                <td
+                    class="empty-table"
+                    colspan="3">
+                    No se encontraron registros.
+                </td>
+            </tr>
+            `;
 
 
         resultCount.textContent =
@@ -3183,7 +2946,7 @@ function renderTable(){
 
 
     rows.forEach(
-        function(row,index){
+        (row,index) => {
 
             const tr =
                 document.createElement(
@@ -3191,37 +2954,35 @@ function renderTable(){
                 );
 
 
-            const tdNumber =
+            const numberCell =
                 document.createElement(
                     "td"
                 );
 
 
-            tdNumber.className =
-                "row-index";
+            numberCell.className =
+                "row-number";
 
 
-            tdNumber.textContent =
+            numberCell.textContent =
                 index + 1;
 
 
-
-            const tdCode =
+            const codeCell =
                 document.createElement(
                     "td"
                 );
 
 
-            tdCode.className =
+            codeCell.className =
                 "code";
 
 
-            tdCode.textContent =
+            codeCell.textContent =
                 row.code;
 
 
-
-            const tdStatus =
+            const statusCell =
                 document.createElement(
                     "td"
                 );
@@ -3234,7 +2995,6 @@ function renderTable(){
 
 
             badge.className =
-
                 "status " +
                 row.className;
 
@@ -3243,23 +3003,23 @@ function renderTable(){
                 row.status;
 
 
-            tdStatus.appendChild(
+            statusCell.appendChild(
                 badge
             );
 
 
             tr.appendChild(
-                tdNumber
+                numberCell
             );
 
 
             tr.appendChild(
-                tdCode
+                codeCell
             );
 
 
             tr.appendChild(
-                tdStatus
+                statusCell
             );
 
 
@@ -3289,10 +3049,6 @@ function renderTable(){
 
 
 
-/* =========================================================
-   TABS
-========================================================= */
-
 function updateTabs(){
 
     document
@@ -3300,7 +3056,7 @@ function updateTabs(){
         ".tab"
     )
     .forEach(
-        function(tab){
+        tab => {
 
             tab.classList.toggle(
 
@@ -3323,7 +3079,7 @@ document
     ".tab"
 )
 .forEach(
-    function(tab){
+    tab => {
 
         tab.addEventListener(
             "click",
@@ -3349,10 +3105,6 @@ document
 
 
 
-/* =========================================================
-   SEARCH
-========================================================= */
-
 searchInput.addEventListener(
     "input",
     renderTable
@@ -3360,265 +3112,16 @@ searchInput.addEventListener(
 
 
 
-/* =========================================================
-   COPY
-========================================================= */
-
 document
 .getElementById(
-    "copyButton"
+    "compareButton"
 )
 .addEventListener(
     "click",
-    async function(){
-
-        const rows =
-            filteredRows();
-
-
-        if(rows.length === 0){
-
-            toast(
-                "No hay códigos para copiar."
-            );
-
-            return;
-
-        }
-
-
-        const text =
-            rows
-            .map(function(row){
-
-                return row.code;
-
-            })
-            .join("\n");
-
-
-        try{
-
-            await navigator
-            .clipboard
-            .writeText(text);
-
-
-            toast(
-                rows.length +
-                " códigos copiados."
-            );
-
-        }
-        catch(error){
-
-            const textarea =
-                document.createElement(
-                    "textarea"
-                );
-
-
-            textarea.value =
-                text;
-
-
-            document.body.appendChild(
-                textarea
-            );
-
-
-            textarea.select();
-
-
-            document.execCommand(
-                "copy"
-            );
-
-
-            textarea.remove();
-
-
-            toast(
-                "Códigos copiados."
-            );
-
-        }
-
-    }
+    compare
 );
 
 
-
-/* =========================================================
-   CSV
-========================================================= */
-
-document
-.getElementById(
-    "downloadButton"
-)
-.addEventListener(
-    "click",
-    function(){
-
-        const rows =
-            filteredRows();
-
-
-        if(rows.length === 0){
-
-            toast(
-                "No hay información para exportar."
-            );
-
-            return;
-
-        }
-
-
-        const csvRows = [
-
-            [
-                "Codigo",
-                "Estado"
-            ],
-
-            ...rows.map(
-                function(row){
-
-                    return [
-
-                        row.code,
-
-                        row.status
-
-                    ];
-
-                }
-            )
-
-        ];
-
-
-        const csv =
-
-            "\uFEFF"
-
-            +
-
-            csvRows.map(
-                function(row){
-
-                    return row
-                    .map(
-                        function(value){
-
-                            return (
-                                '"' +
-                                String(value)
-                                .replaceAll(
-                                    '"',
-                                    '""'
-                                )
-                                +
-                                '"'
-                            );
-
-                        }
-                    )
-                    .join(";");
-
-                }
-            )
-            .join("\n");
-
-
-        const blob =
-            new Blob(
-                [csv],
-                {
-                    type:
-                        "text/csv;charset=utf-8;"
-                }
-            );
-
-
-        const url =
-            URL.createObjectURL(
-                blob
-            );
-
-
-        const link =
-            document.createElement(
-                "a"
-            );
-
-
-        const names = {
-
-            new:
-                "codigos_nuevos",
-
-            removed:
-                "codigos_eliminados",
-
-            same:
-                "codigos_continuan",
-
-            duplicates:
-                "codigos_duplicados",
-
-            all:
-                "asignacion_actual"
-
-        };
-
-
-        link.href =
-            url;
-
-
-        link.download =
-
-            (
-                names[activeTab]
-                ||
-                "comparacion"
-            )
-
-            +
-
-            ".csv";
-
-
-        document.body.appendChild(
-            link
-        );
-
-
-        link.click();
-
-        link.remove();
-
-
-        URL.revokeObjectURL(
-            url
-        );
-
-
-        toast(
-            "Archivo CSV generado."
-        );
-
-    }
-);
-
-
-
-/* =========================================================
-   SAMPLE
-========================================================= */
 
 document
 .getElementById(
@@ -3669,10 +3172,6 @@ document
 
 
 
-/* =========================================================
-   SWAP
-========================================================= */
-
 document
 .getElementById(
     "swapButton"
@@ -3681,7 +3180,7 @@ document
     "click",
     function(){
 
-        const temporary =
+        const temp =
             previousInput.value;
 
 
@@ -3690,7 +3189,7 @@ document
 
 
         currentInput.value =
-            temporary;
+            temp;
 
 
         updateCounters();
@@ -3704,10 +3203,6 @@ document
 );
 
 
-
-/* =========================================================
-   CLEAR
-========================================================= */
 
 document
 .getElementById(
@@ -3730,19 +3225,12 @@ document
 
 
         results = {
-
             previous:[],
-
             current:[],
-
             newCodes:[],
-
             removed:[],
-
             same:[],
-
             duplicates:[]
-
         };
 
 
@@ -3754,7 +3242,7 @@ document
 
 
         emptyState.style.display =
-            "flex";
+            "grid";
 
 
         previousInput.focus();
@@ -3769,24 +3257,228 @@ document
 
 
 
-/* =========================================================
-   MAIN BUTTON
-========================================================= */
-
 document
 .getElementById(
-    "compareButton"
+    "copyButton"
 )
 .addEventListener(
     "click",
-    compare
+    async function(){
+
+        const rows =
+            getFilteredRows();
+
+
+        if(rows.length === 0){
+
+            toast(
+                "No hay códigos para copiar."
+            );
+
+            return;
+
+        }
+
+
+        const text =
+            rows.map(
+                row => row.code
+            ).join("\n");
+
+
+        try{
+
+            await navigator
+            .clipboard
+            .writeText(text);
+
+
+            toast(
+                rows.length +
+                " códigos copiados."
+            );
+
+        }
+        catch{
+
+            const temporary =
+                document.createElement(
+                    "textarea"
+                );
+
+
+            temporary.value =
+                text;
+
+
+            document.body
+            .appendChild(
+                temporary
+            );
+
+
+            temporary.select();
+
+
+            document.execCommand(
+                "copy"
+            );
+
+
+            temporary.remove();
+
+
+            toast(
+                "Códigos copiados."
+            );
+
+        }
+
+    }
 );
 
 
 
-/* =========================================================
-   CTRL ENTER
-========================================================= */
+document
+.getElementById(
+    "downloadButton"
+)
+.addEventListener(
+    "click",
+    function(){
+
+        const rows =
+            getFilteredRows();
+
+
+        if(rows.length === 0){
+
+            toast(
+                "No hay información para exportar."
+            );
+
+            return;
+
+        }
+
+
+        const csvRows = [
+
+            [
+                "Codigo",
+                "Estado"
+            ],
+
+            ...rows.map(
+                row => [
+                    row.code,
+                    row.status
+                ]
+            )
+
+        ];
+
+
+        const csv =
+            "\uFEFF"
+
+            +
+
+            csvRows
+            .map(
+                row =>
+                    row
+                    .map(
+                        value =>
+                            `"${String(value).replaceAll('"','""')}"`
+                    )
+                    .join(";")
+            )
+            .join("\n");
+
+
+        const blob =
+            new Blob(
+                [csv],
+                {
+                    type:
+                        "text/csv;charset=utf-8;"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        const names = {
+            new:"codigos_nuevos",
+            removed:"codigos_eliminados",
+            same:"codigos_continuan",
+            duplicates:"codigos_duplicados",
+            all:"asignacion_actual"
+        };
+
+
+        link.href =
+            url;
+
+
+        link.download =
+            (
+                names[activeTab]
+                ||
+                "comparacion"
+            )
+            +
+            ".csv";
+
+
+        document.body
+        .appendChild(
+            link
+        );
+
+
+        link.click();
+
+        link.remove();
+
+
+        URL.revokeObjectURL(
+            url
+        );
+
+
+        toast(
+            "Archivo CSV generado."
+        );
+
+    }
+);
+
+
+
+previousInput.addEventListener(
+    "input",
+    updateCounters
+);
+
+
+currentInput.addEventListener(
+    "input",
+    updateCounters
+);
+
+
 
 document.addEventListener(
     "keydown",
@@ -3810,10 +3502,6 @@ document.addEventListener(
 );
 
 
-
-/* =========================================================
-   TOAST
-========================================================= */
 
 function toast(message){
 
@@ -3843,14 +3531,14 @@ function toast(message){
 
 
     setTimeout(
-        function(){
+        () => {
 
             element.style.opacity =
                 "0";
 
 
             element.style.transform =
-                "translateY(7px)";
+                "translateY(8px)";
 
 
             element.style.transition =
@@ -3858,11 +3546,7 @@ function toast(message){
 
 
             setTimeout(
-                function(){
-
-                    element.remove();
-
-                },
+                () => element.remove(),
                 220
             );
 
@@ -3873,10 +3557,6 @@ function toast(message){
 }
 
 
-
-/* =========================================================
-   START
-========================================================= */
 
 updateCounters();
 
