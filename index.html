@@ -1,1024 +1,1562 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Comparador de Asignaciones</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    :root{
-      /* Paleta elegante / jurídica */
-      --bg:#eeebe5;
-      --bg-2:#e7e2da;
-      --surface:#f8f5f0;
-      --surface-2:#f3efe8;
-      --surface-3:#fcfaf7;
+<title>Comparador de Asignaciones</title>
 
-      --border:#d9d1c6;
-      --border-soft:#e6ded2;
+<style>
 
-      --text:#1d2a3a;
-      --text-soft:#5f6b78;
-      --text-muted:#7c8791;
+:root{
+    --bg:#e9edf1;
+    --bg-soft:#f1f3f5;
 
-      --primary:#24364d;
-      --primary-2:#314863;
-      --primary-soft:#e6ebf1;
+    --surface:#ffffff;
+    --surface-alt:#f8f9fa;
 
-      --accent:#b59663;
-      --accent-soft:#efe5d4;
+    --navy:#172a3f;
+    --navy-2:#223c59;
+    --navy-3:#315171;
 
-      --success:#3f6b57;
-      --success-soft:#eaf3ee;
+    --gold:#b49a6a;
+    --gold-soft:#f1ece3;
 
-      --danger:#8f4f4f;
-      --danger-soft:#f8ecec;
+    --text:#172331;
+    --muted:#667281;
+    --muted-2:#8c96a2;
 
-      --keep:#5c5875;
-      --keep-soft:#efedf6;
+    --border:#d9dfe5;
+    --border-soft:#e8ecef;
 
-      --warning:#8b6742;
-      --warning-soft:#f6efe7;
+    --green:#3b785f;
+    --green-soft:#edf6f1;
 
-      --shadow-sm:0 8px 24px rgba(31,36,41,.05);
-      --shadow-md:0 18px 45px rgba(31,36,41,.08);
-      --shadow-lg:0 28px 60px rgba(31,36,41,.10);
+    --red:#a34f4f;
+    --red-soft:#faeeee;
 
-      --radius-xl:28px;
-      --radius-lg:22px;
-      --radius-md:16px;
-      --radius-sm:12px;
+    --purple:#655d82;
+    --purple-soft:#f1eef7;
+
+    --amber:#957044;
+    --amber-soft:#f8f2ea;
+
+    --shadow-sm:0 6px 18px rgba(20,38,58,.05);
+    --shadow-md:0 14px 34px rgba(20,38,58,.08);
+
+    --radius:18px;
+    --radius-sm:12px;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Inter, "Segoe UI", Arial, sans-serif;
+    color:var(--text);
+
+    background:
+        radial-gradient(circle at 0% 0%, rgba(180,154,106,.08), transparent 28rem),
+        linear-gradient(180deg,#edf1f4 0%,#e6eaee 100%);
+}
+
+button,
+textarea,
+input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1380px,calc(100% - 34px));
+    margin:auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+
+    background:rgba(248,249,250,.90);
+    backdrop-filter:blur(16px);
+
+    border-bottom:1px solid rgba(217,223,229,.9);
+}
+
+.topbar-inner{
+    height:72px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.brand-icon{
+    width:44px;
+    height:44px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:13px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--navy),
+            var(--navy-3)
+        );
+
+    box-shadow:
+        0 10px 22px rgba(23,42,63,.18);
+}
+
+.brand-icon svg{
+    width:22px;
+    height:22px;
+}
+
+.brand-name{
+    font-size:23px;
+    font-weight:800;
+    letter-spacing:-.025em;
+}
+
+.brand-sub{
+    margin-top:2px;
+
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+.security{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    padding:8px 12px;
+
+    border:1px solid var(--border);
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.65);
+
+    color:var(--muted);
+
+    font-size:12px;
+    font-weight:700;
+}
+
+.security-dot{
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:var(--green);
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main{
+    padding:20px 0 40px;
+}
+
+
+/* =========================================================
+   INTRO COMPACTO
+========================================================= */
+
+.intro{
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:16px 19px;
+
+    margin-bottom:16px;
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.92),
+            rgba(248,249,250,.95)
+        );
+
+    box-shadow:var(--shadow-sm);
+}
+
+.intro-title{
+    font-size:19px;
+    font-weight:800;
+
+    margin-bottom:4px;
+}
+
+.intro-text{
+    color:var(--muted);
+
+    font-size:13px;
+
+    line-height:1.5;
+}
+
+.tip{
+    flex:0 0 auto;
+
+    padding:8px 11px;
+
+    border-radius:10px;
+
+    background:var(--gold-soft);
+
+    color:#715d39;
+
+    border:1px solid #e5dac6;
+
+    font-size:11px;
+    font-weight:750;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.compare-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:16px;
+}
+
+.panel{
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #f8f9fa 100%
+        );
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow-sm);
+
+    overflow:hidden;
+}
+
+.panel-head{
+    min-height:70px;
+
+    padding:16px 18px;
+
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    gap:14px;
+
+    border-bottom:
+        1px solid var(--border-soft);
+}
+
+.panel-title-row{
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+}
+
+.panel-number{
+    width:34px;
+    height:34px;
+
+    display:grid;
+    place-items:center;
+
+    flex:0 0 auto;
+
+    border-radius:10px;
+
+    background:var(--navy);
+
+    color:white;
+
+    font-size:12px;
+    font-weight:800;
+
+    box-shadow:
+        0 6px 14px rgba(23,42,63,.13);
+}
+
+.panel-title{
+    font-size:18px;
+    font-weight:800;
+
+    letter-spacing:-.015em;
+}
+
+.panel-description{
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+.counter{
+    padding:7px 10px;
+
+    border-radius:9px;
+
+    background:#e9eef3;
+
+    color:var(--navy);
+
+    font-size:12px;
+    font-weight:800;
+
+    white-space:nowrap;
+}
+
+.panel-body{
+    padding:14px;
+}
+
+textarea{
+    display:block;
+
+    width:100%;
+    height:255px;
+
+    resize:vertical;
+
+    padding:15px 16px;
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    outline:none;
+
+    color:var(--text);
+
+    background:#f7f8f9;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+    transition:.2s ease;
+
+    box-shadow:
+        inset 0 2px 6px rgba(20,38,58,.025);
+}
+
+textarea:focus{
+    border-color:#b8a47c;
+
+    background:#fff;
+
+    box-shadow:
+        0 0 0 4px rgba(180,154,106,.09);
+}
+
+textarea::placeholder{
+    color:#9da6af;
+}
+
+.helper{
+    margin-top:8px;
+
+    color:var(--muted-2);
+
+    font-size:11px;
+
+    line-height:1.45;
+}
+
+
+/* =========================================================
+   ACTION BAR
+========================================================= */
+
+.action-bar{
+    margin:14px 0 18px;
+
+    padding:11px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    background:
+        rgba(255,255,255,.78);
+
+    box-shadow:var(--shadow-sm);
+}
+
+.action-group{
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+}
+
+.btn{
+    min-height:42px;
+
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    padding:0 15px;
+
+    border:none;
+
+    border-radius:11px;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    transition:.18s ease;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+}
+
+.btn svg{
+    width:16px;
+    height:16px;
+}
+
+.btn-primary{
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--navy),
+            var(--navy-3)
+        );
+
+    box-shadow:
+        0 8px 18px rgba(23,42,63,.16);
+}
+
+.btn-outline{
+    color:var(--navy);
+
+    border:
+        1px solid var(--border);
+
+    background:white;
+}
+
+.btn-gold{
+    color:#665332;
+
+    border:
+        1px solid #e0d3bd;
+
+    background:var(--gold-soft);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty{
+    min-height:130px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:24px;
+
+    border:
+        1px dashed
+        #bec7cf;
+
+    border-radius:16px;
+
+    background:
+        rgba(255,255,255,.48);
+}
+
+.empty strong{
+    display:block;
+
+    margin-bottom:6px;
+
+    font-size:18px;
+}
+
+.empty span{
+    color:var(--muted);
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   RESULTS
+========================================================= */
+
+#results{
+    display:none;
+
+    animation:
+        fadeUp
+        .4s ease;
+}
+
+.results-head{
+    margin:
+        8px
+        0
+        13px;
+}
+
+.results-head h2{
+    margin:0;
+
+    font-size:25px;
+
+    letter-spacing:-.025em;
+}
+
+.results-head p{
+    margin:
+        4px
+        0
+        0;
+
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   METRICS
+========================================================= */
+
+.metrics{
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:11px;
+
+    margin-bottom:14px;
+}
+
+.metric{
+    position:relative;
+
+    overflow:hidden;
+
+    min-height:110px;
+
+    padding:16px;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff,
+            #f7f8f9
+        );
+
+    box-shadow:var(--shadow-sm);
+}
+
+.metric::after{
+    content:"";
+
+    position:absolute;
+
+    width:66px;
+    height:66px;
+
+    right:-27px;
+    top:-27px;
+
+    border-radius:50%;
+
+    background:currentColor;
+
+    opacity:.05;
+}
+
+.metric-label{
+    color:var(--muted);
+
+    font-size:11px;
+
+    font-weight:700;
+
+    margin-bottom:9px;
+}
+
+.metric-number{
+    font-size:31px;
+
+    line-height:1;
+
+    font-weight:900;
+
+    letter-spacing:-.035em;
+}
+
+.metric-note{
+    margin-top:7px;
+
+    color:var(--muted-2);
+
+    font-size:10.5px;
+}
+
+.metric-current{
+    color:var(--navy-3);
+}
+
+.metric-new{
+    color:var(--green);
+}
+
+.metric-removed{
+    color:var(--red);
+}
+
+.metric-same{
+    color:var(--purple);
+}
+
+.metric-duplicates{
+    color:var(--amber);
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.summary-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.45fr .55fr;
+
+    gap:14px;
+
+    margin-bottom:14px;
+}
+
+.summary-card{
+    padding:18px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff,
+            #f7f8f9
+        );
+
+    box-shadow:var(--shadow-sm);
+}
+
+.summary-title{
+    margin-bottom:3px;
+
+    font-size:16px;
+
+    font-weight:800;
+}
+
+.summary-subtitle{
+    margin-bottom:15px;
+
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+.progress{
+    margin-bottom:12px;
+}
+
+.progress:last-child{
+    margin-bottom:0;
+}
+
+.progress-top{
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:6px;
+
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+.progress-top strong{
+    color:var(--text);
+}
+
+.progress-track{
+    height:7px;
+
+    overflow:hidden;
+
+    background:#e3e8ec;
+
+    border-radius:999px;
+}
+
+.progress-bar{
+    height:100%;
+
+    width:0;
+
+    border-radius:999px;
+
+    transition:
+        width
+        .7s ease;
+}
+
+.progress-current{
+    background:var(--navy-3);
+}
+
+.progress-new{
+    background:var(--green);
+}
+
+.progress-removed{
+    background:var(--red);
+}
+
+.progress-same{
+    background:var(--purple);
+}
+
+
+/* VARIATION */
+
+.variation-card{
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    color:white;
+
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(180,154,106,.18),
+            transparent 10rem
+        ),
+        linear-gradient(
+            140deg,
+            var(--navy),
+            var(--navy-3)
+        );
+
+    box-shadow:var(--shadow-md);
+}
+
+.variation-label{
+    color:#d9cfbd;
+
+    font-size:11px;
+
+    font-weight:750;
+}
+
+.variation-number{
+    margin:
+        7px
+        0
+        3px;
+
+    font-size:40px;
+
+    line-height:1;
+
+    font-weight:900;
+
+    letter-spacing:-.04em;
+}
+
+.variation-percent{
+    color:#e8e0d4;
+
+    font-size:13px;
+
+    font-weight:750;
+}
+
+.variation-description{
+    margin-top:12px;
+
+    color:#dce2e9;
+
+    font-size:11px;
+
+    line-height:1.55;
+}
+
+
+/* =========================================================
+   RESULTS TABLE
+========================================================= */
+
+.results-card{
+    overflow:hidden;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:16px;
+
+    background:white;
+
+    box-shadow:var(--shadow-sm);
+}
+
+.toolbar{
+    padding:12px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+    background:#f7f8f9;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.tabs{
+    display:flex;
+
+    gap:5px;
+
+    flex-wrap:wrap;
+}
+
+.tab{
+    min-height:34px;
+
+    padding:
+        0
+        11px;
+
+    border:1px solid transparent;
+
+    border-radius:9px;
+
+    color:var(--muted);
+
+    background:transparent;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    transition:.18s ease;
+}
+
+.tab:hover{
+    color:var(--navy);
+
+    background:white;
+}
+
+.tab.active{
+    color:var(--navy);
+
+    border-color:#d3dce4;
+
+    background:#e9eef3;
+}
+
+.tab span{
+    margin-left:4px;
+
+    opacity:.7;
+}
+
+.toolbar-right{
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+}
+
+.search{
+    width:210px;
+
+    height:36px;
+
+    padding:
+        0
+        11px;
+
+    outline:none;
+
+    border:1px solid var(--border);
+
+    border-radius:9px;
+
+    background:white;
+
+    color:var(--text);
+
+    font-size:12px;
+}
+
+.search:focus{
+    border-color:#b8a47c;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(180,154,106,.08);
+}
+
+.icon-btn{
+    width:36px;
+    height:36px;
+
+    padding:0;
+
+    display:grid;
+    place-items:center;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:9px;
+
+    background:white;
+
+    color:var(--muted);
+
+    transition:.18s ease;
+}
+
+.icon-btn:hover{
+    color:var(--navy);
+
+    background:#edf1f4;
+}
+
+.icon-btn svg{
+    width:15px;
+    height:15px;
+}
+
+.table-wrap{
+    max-height:440px;
+
+    overflow:auto;
+}
+
+table{
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+thead{
+    position:sticky;
+
+    top:0;
+
+    z-index:3;
+
+    background:#edf1f4;
+}
+
+th{
+    padding:
+        11px
+        15px;
+
+    text-align:left;
+
+    color:var(--muted);
+
+    text-transform:uppercase;
+
+    letter-spacing:.07em;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+td{
+    padding:
+        11px
+        15px;
+
+    border-bottom:
+        1px solid var(--border-soft);
+
+    font-size:12px;
+
+    color:var(--text);
+}
+
+tbody tr:hover{
+    background:#f8fafb;
+}
+
+.row-index{
+    width:60px;
+
+    color:var(--muted-2);
+}
+
+.code{
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-weight:700;
+
+    color:var(--navy);
+}
+
+.status{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:
+        5px
+        8px;
+
+    border-radius:999px;
+
+    font-size:10px;
+
+    font-weight:800;
+}
+
+.status::before{
+    content:"";
+
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:currentColor;
+}
+
+.status-new{
+    color:var(--green);
+
+    background:var(--green-soft);
+}
+
+.status-removed{
+    color:var(--red);
+
+    background:var(--red-soft);
+}
+
+.status-same{
+    color:var(--purple);
+
+    background:var(--purple-soft);
+}
+
+.status-duplicate{
+    color:var(--amber);
+
+    background:var(--amber-soft);
+}
+
+.empty-row{
+    padding:35px !important;
+
+    text-align:center;
+
+    color:var(--muted-2);
+}
+
+.table-footer{
+    padding:
+        10px
+        14px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+
+    background:#f7f8f9;
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    margin-top:18px;
+
+    padding-top:14px;
+
+    border-top:
+        1px solid rgba(117,129,141,.18);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    color:var(--muted-2);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast-area{
+    position:fixed;
+
+    right:18px;
+    bottom:18px;
+
+    z-index:999;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    pointer-events:none;
+}
+
+.toast{
+    min-width:240px;
+
+    padding:
+        12px
+        14px;
+
+    border-radius:11px;
+
+    color:white;
+
+    background:var(--navy);
+
+    box-shadow:
+        0 18px 38px
+        rgba(23,42,63,.22);
+
+    font-size:11px;
+
+    font-weight:700;
+
+    animation:
+        fadeUp
+        .25s ease;
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(8px);
     }
 
-    *{
-      box-sizing:border-box;
+    to{
+        opacity:1;
+        transform:translateY(0);
     }
 
-    html{
-      scroll-behavior:smooth;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+    .metrics{
+        grid-template-columns:
+            repeat(3,1fr);
     }
 
-    body{
-      margin:0;
-      font-family:Inter, "Segoe UI", Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(181,150,99,.08), transparent 26rem),
-        radial-gradient(circle at bottom right, rgba(36,54,77,.05), transparent 28rem),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-      min-height:100vh;
+}
+
+
+@media(max-width:850px){
+
+    .compare-grid{
+        grid-template-columns:1fr;
     }
 
-    button,
-    input,
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
     textarea{
-      font:inherit;
+        height:220px;
     }
 
-    button{
-      cursor:pointer;
-    }
+}
+
+
+@media(max-width:650px){
 
     .container{
-      width:min(1320px, calc(100% - 32px));
-      margin:0 auto;
-    }
-
-    /* TOPBAR */
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      background:rgba(248,245,240,.88);
-      backdrop-filter:blur(14px);
-      border-bottom:1px solid rgba(217,209,198,.7);
-      box-shadow:0 2px 20px rgba(31,36,41,.03);
+        width:
+            min(
+                100% - 20px,
+                1380px
+            );
     }
 
     .topbar-inner{
-      min-height:82px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
+        height:66px;
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:14px;
+    .brand-name{
+        font-size:19px;
     }
 
-    .brand-icon{
-      width:52px;
-      height:52px;
-      border-radius:18px;
-      display:grid;
-      place-items:center;
-      background:linear-gradient(135deg, var(--primary), var(--primary-2));
-      color:#fff;
-      box-shadow:0 14px 28px rgba(36,54,77,.18);
-      position:relative;
-      overflow:hidden;
+    .brand-sub{
+        display:none;
     }
 
-    .brand-icon::after{
-      content:"";
-      position:absolute;
-      inset:1px;
-      border-radius:17px;
-      border:1px solid rgba(255,255,255,.14);
-      pointer-events:none;
+    .security{
+        display:none;
     }
 
-    .brand-icon svg{
-      width:24px;
-      height:24px;
-    }
+    .intro{
+        align-items:flex-start;
 
-    .brand-title{
-      font-size:30px;
-      font-weight:800;
-      letter-spacing:-0.03em;
-      line-height:1.05;
-    }
-
-    .brand-subtitle{
-      margin-top:4px;
-      color:var(--text-soft);
-      font-size:14px;
-    }
-
-    .safe-badge{
-      padding:10px 14px;
-      border-radius:999px;
-      background:rgba(255,255,255,.5);
-      border:1px solid var(--border);
-      color:var(--text-soft);
-      font-size:13px;
-      font-weight:700;
-      white-space:nowrap;
-      box-shadow:var(--shadow-sm);
-    }
-
-    /* APP INTRO SMALL */
-    .subheader{
-      padding:20px 0 12px;
-    }
-
-    .subheader-card{
-      background:linear-gradient(180deg, rgba(248,245,240,.92), rgba(243,239,232,.95));
-      border:1px solid var(--border);
-      border-radius:24px;
-      padding:20px 22px;
-      box-shadow:var(--shadow-sm);
-      display:flex;
-      justify-content:space-between;
-      gap:18px;
-      align-items:flex-start;
-      flex-wrap:wrap;
-    }
-
-    .subheader-title{
-      font-size:28px;
-      font-weight:800;
-      letter-spacing:-0.03em;
-      margin:0 0 6px;
-    }
-
-    .subheader-text{
-      margin:0;
-      color:var(--text-soft);
-      font-size:16px;
-      line-height:1.65;
-      max-width:860px;
-    }
-
-    .mini-tip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:14px;
-      background:var(--accent-soft);
-      color:#6d5836;
-      border:1px solid #e5d4b7;
-      font-size:13px;
-      font-weight:700;
-      box-shadow:var(--shadow-sm);
-    }
-
-    /* MAIN GRID */
-    .compare-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:22px;
-      margin-top:18px;
-    }
-
-    .card{
-      background:linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
-      border:1px solid var(--border);
-      border-radius:var(--radius-xl);
-      box-shadow:var(--shadow-sm);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .card::before{
-      content:"";
-      position:absolute;
-      left:0;
-      top:0;
-      width:100%;
-      height:1px;
-      background:linear-gradient(90deg, transparent, rgba(181,150,99,.55), transparent);
-      opacity:.8;
-      pointer-events:none;
-    }
-
-    .input-card{
-      padding:24px;
-    }
-
-    .card-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:16px;
-      margin-bottom:18px;
-    }
-
-    .card-title{
-      font-size:24px;
-      font-weight:800;
-      letter-spacing:-0.02em;
-    }
-
-    .card-subtitle{
-      color:var(--text-soft);
-      margin-top:6px;
-      font-size:15px;
-      line-height:1.55;
-      max-width:540px;
-    }
-
-    .counter{
-      background:var(--primary-soft);
-      color:var(--primary);
-      border:1px solid #d1dbe6;
-      border-radius:14px;
-      padding:10px 14px;
-      font-size:14px;
-      font-weight:800;
-      white-space:nowrap;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
-    }
-
-    textarea{
-      width:100%;
-      min-height:330px;
-      resize:vertical;
-      border:1px solid var(--border);
-      border-radius:18px;
-      background:linear-gradient(180deg, var(--surface-3) 0%, #f6f2ec 100%);
-      padding:18px;
-      font-size:16px;
-      line-height:1.72;
-      color:var(--text);
-      outline:none;
-      transition:.2s ease;
-      font-family:Consolas, "Courier New", monospace;
-      box-shadow:inset 0 2px 10px rgba(31,36,41,.03);
-    }
-
-    textarea:focus{
-      background:#fffdfa;
-      border-color:#cab48c;
-      box-shadow:
-        0 0 0 4px rgba(181,150,99,.10),
-        inset 0 2px 10px rgba(31,36,41,.02);
-    }
-
-    textarea::placeholder{
-      color:#96a0aa;
-    }
-
-    .helper{
-      margin-top:12px;
-      color:var(--text-muted);
-      font-size:13px;
-      line-height:1.55;
-    }
-
-    /* ACTION BAR */
-    .action-bar{
-      margin:22px 0 28px;
-      padding:18px;
-      border:1px solid var(--border);
-      border-radius:24px;
-      background:linear-gradient(180deg, rgba(248,245,240,.98), rgba(243,239,232,.98));
-      box-shadow:var(--shadow-sm);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-
-    .action-group{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-
-    .btn{
-      min-height:50px;
-      border-radius:16px;
-      padding:0 18px;
-      font-size:15px;
-      font-weight:800;
-      border:none;
-      transition:.18s ease;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      box-shadow:0 6px 18px rgba(31,36,41,.04);
-    }
-
-    .btn:hover{
-      transform:translateY(-1px);
-    }
-
-    .btn-primary{
-      background:linear-gradient(135deg, var(--primary), var(--primary-2));
-      color:#fff;
-      box-shadow:0 14px 28px rgba(36,54,77,.18);
-    }
-
-    .btn-secondary{
-      background:rgba(255,255,255,.7);
-      color:var(--text);
-      border:1px solid var(--border);
-    }
-
-    .btn-soft{
-      background:var(--accent-soft);
-      color:#6b5635;
-      border:1px solid #e5d4b7;
-    }
-
-    .btn svg{
-      width:18px;
-      height:18px;
-    }
-
-    /* EMPTY */
-    .empty{
-      border:1px dashed #cdbfa9;
-      border-radius:24px;
-      background:linear-gradient(180deg, rgba(248,245,240,.85), rgba(243,239,232,.88));
-      text-align:center;
-      padding:52px 24px;
-      margin-bottom:20px;
-      box-shadow:var(--shadow-sm);
-    }
-
-    .empty h3{
-      margin:0 0 10px;
-      font-size:28px;
-      letter-spacing:-0.03em;
-    }
-
-    .empty p{
-      margin:0;
-      color:var(--text-soft);
-      font-size:17px;
-      line-height:1.7;
-      max-width:760px;
-      margin-inline:auto;
-    }
-
-    /* RESULTS */
-    #resultsSection{
-      display:none;
-      animation:fadeUp .4s ease;
-    }
-
-    .section-head{
-      margin:10px 0 16px;
-    }
-
-    .section-head h2{
-      margin:0 0 8px;
-      font-size:34px;
-      letter-spacing:-0.03em;
-    }
-
-    .section-head p{
-      margin:0;
-      font-size:17px;
-      color:var(--text-soft);
-      line-height:1.6;
+        flex-direction:column;
     }
 
     .metrics{
-      display:grid;
-      grid-template-columns:repeat(5, 1fr);
-      gap:16px;
-      margin-bottom:20px;
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
-    .metric{
-      padding:22px;
-      border-radius:22px;
-      border:1px solid var(--border);
-      background:linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
-      box-shadow:var(--shadow-sm);
-      position:relative;
-      overflow:hidden;
+    .action-bar{
+        flex-direction:column;
+
+        align-items:stretch;
     }
 
-    .metric::after{
-      content:"";
-      position:absolute;
-      right:-24px;
-      top:-24px;
-      width:80px;
-      height:80px;
-      border-radius:50%;
-      background:currentColor;
-      opacity:.045;
+    .action-group{
+        width:100%;
     }
 
-    .metric-label{
-      font-size:14px;
-      color:var(--text-soft);
-      font-weight:700;
-      margin-bottom:12px;
-    }
-
-    .metric-value{
-      font-size:42px;
-      font-weight:900;
-      line-height:1;
-      letter-spacing:-0.04em;
-      margin-bottom:10px;
-    }
-
-    .metric-note{
-      font-size:14px;
-      color:var(--text-muted);
-      line-height:1.5;
-    }
-
-    .m-current{ color:var(--primary); }
-    .m-new{ color:var(--success); }
-    .m-removed{ color:var(--danger); }
-    .m-same{ color:var(--keep); }
-    .m-duplicates{ color:var(--warning); }
-
-    .summary-grid{
-      display:grid;
-      grid-template-columns:1.25fr .75fr;
-      gap:18px;
-      margin-bottom:20px;
-    }
-
-    .summary-card{
-      padding:24px;
-      border-radius:22px;
-      border:1px solid var(--border);
-      background:linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
-      box-shadow:var(--shadow-sm);
-    }
-
-    .summary-title{
-      font-size:24px;
-      font-weight:800;
-      margin-bottom:8px;
-      letter-spacing:-0.02em;
-    }
-
-    .summary-text{
-      color:var(--text-soft);
-      font-size:15px;
-      line-height:1.6;
-      margin-bottom:22px;
-    }
-
-    .bar-group{
-      margin-bottom:18px;
-    }
-
-    .bar-group:last-child{
-      margin-bottom:0;
-    }
-
-    .bar-row{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:8px;
-      font-size:15px;
-    }
-
-    .bar-row strong{
-      font-size:15px;
-    }
-
-    .bar-track{
-      height:12px;
-      background:#e7e0d6;
-      border-radius:999px;
-      overflow:hidden;
-      box-shadow:inset 0 1px 4px rgba(31,36,41,.05);
-    }
-
-    .bar-fill{
-      height:100%;
-      width:0;
-      border-radius:inherit;
-      transition:width .7s ease;
-    }
-
-    .bar-current{ background:var(--primary); }
-    .bar-new{ background:var(--success); }
-    .bar-removed{ background:var(--danger); }
-    .bar-same{ background:var(--keep); }
-
-    .highlight-card{
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      min-height:100%;
-      background:
-        radial-gradient(circle at top right, rgba(181,150,99,.12), transparent 9rem),
-        linear-gradient(135deg, var(--primary), var(--primary-2));
-      color:#fff;
-      box-shadow:var(--shadow-md);
-    }
-
-    .highlight-label{
-      font-size:14px;
-      font-weight:700;
-      opacity:.92;
-      margin-bottom:10px;
-      color:#e9dfd0;
-    }
-
-    .highlight-number{
-      font-size:52px;
-      font-weight:900;
-      line-height:1;
-      letter-spacing:-0.05em;
-      margin-bottom:10px;
-    }
-
-    .highlight-percent{
-      font-size:18px;
-      font-weight:800;
-      margin-bottom:16px;
-      color:#f0e7db;
-    }
-
-    .highlight-desc{
-      font-size:15px;
-      line-height:1.7;
-      color:rgba(255,255,255,.9);
-    }
-
-    /* TABLE CARD */
-    .table-card{
-      overflow:hidden;
+    .action-group .btn{
+        flex:1;
     }
 
     .toolbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:16px;
-      flex-wrap:wrap;
-      padding:18px;
-      border-bottom:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(248,245,240,.9), rgba(243,239,232,.95));
-    }
-
-    .tabs{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .tab{
-      min-height:42px;
-      padding:0 16px;
-      border-radius:14px;
-      border:1px solid transparent;
-      background:transparent;
-      color:var(--text-soft);
-      font-size:15px;
-      font-weight:800;
-      transition:.18s ease;
-    }
-
-    .tab:hover{
-      background:rgba(255,255,255,.55);
-      color:var(--text);
-    }
-
-    .tab.active{
-      background:var(--primary-soft);
-      color:var(--primary);
-      border-color:#d1dbe6;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.55);
-    }
-
-    .tab small{
-      margin-left:6px;
-      font-size:13px;
-      opacity:.8;
+        align-items:stretch;
     }
 
     .toolbar-right{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
+        width:100%;
     }
 
     .search{
-      min-width:270px;
-      height:46px;
-      padding:0 14px;
-      border:1px solid var(--border);
-      border-radius:14px;
-      background:rgba(255,255,255,.7);
-      outline:none;
-      font-size:15px;
-      color:var(--text);
-      box-shadow:inset 0 1px 3px rgba(31,36,41,.03);
-    }
-
-    .search:focus{
-      border-color:#cab48c;
-      box-shadow:0 0 0 4px rgba(181,150,99,.10);
-      background:#fffdfa;
-    }
-
-    .icon-btn{
-      width:46px;
-      height:46px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.72);
-      color:var(--text-soft);
-      display:grid;
-      place-items:center;
-      transition:.18s ease;
-      box-shadow:0 4px 12px rgba(31,36,41,.03);
-    }
-
-    .icon-btn:hover{
-      background:var(--primary-soft);
-      color:var(--primary);
-      border-color:#d1dbe6;
-    }
-
-    .icon-btn svg{
-      width:18px;
-      height:18px;
-    }
-
-    .table-wrap{
-      overflow:auto;
-      max-height:560px;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-    }
-
-    thead{
-      position:sticky;
-      top:0;
-      z-index:2;
-      background:#efe9df;
-    }
-
-    th{
-      text-align:left;
-      padding:16px 20px;
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:.06em;
-      color:var(--text-soft);
-      border-bottom:1px solid var(--border);
-    }
-
-    td{
-      padding:16px 20px;
-      border-bottom:1px solid var(--border-soft);
-      font-size:16px;
-      color:var(--text);
-      background:rgba(255,255,255,.4);
-    }
-
-    tbody tr:hover td{
-      background:rgba(255,255,255,.7);
-    }
-
-    .col-index{
-      width:70px;
-      color:var(--text-muted);
-    }
-
-    .code{
-      font-family:Consolas, "Courier New", monospace;
-      font-weight:700;
-      letter-spacing:.01em;
-      color:#1d314d;
-    }
-
-    .status-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:13px;
-      font-weight:800;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
-    }
-
-    .status-badge::before{
-      content:"";
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:currentColor;
-    }
-
-    .badge-new{
-      color:var(--success);
-      background:var(--success-soft);
-    }
-
-    .badge-removed{
-      color:var(--danger);
-      background:var(--danger-soft);
-    }
-
-    .badge-same{
-      color:var(--keep);
-      background:var(--keep-soft);
-    }
-
-    .badge-duplicate{
-      color:var(--warning);
-      background:var(--warning-soft);
-    }
-
-    .empty-row{
-      text-align:center;
-      color:var(--text-soft);
-      font-size:17px;
-      padding:36px !important;
-      background:transparent !important;
-    }
-
-    .table-footer{
-      padding:14px 18px;
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      font-size:14px;
-      color:var(--text-soft);
-      background:linear-gradient(180deg, rgba(248,245,240,.9), rgba(243,239,232,.95));
-      border-top:1px solid var(--border);
-    }
-
-    .footer-note{
-      margin:28px 0 40px;
-      text-align:center;
-      color:var(--text-muted);
-      font-size:14px;
-    }
-
-    /* TOAST */
-    .toast-wrap{
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      z-index:999;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      pointer-events:none;
-    }
-
-    .toast{
-      background:linear-gradient(135deg, var(--primary), var(--primary-2));
-      color:#fff;
-      font-size:15px;
-      font-weight:700;
-      padding:14px 16px;
-      border-radius:14px;
-      box-shadow:0 18px 40px rgba(31,36,41,.22);
-      animation:fadeUp .25s ease;
-      min-width:250px;
-    }
-
-    @keyframes fadeUp{
-      from{
-        opacity:0;
-        transform:translateY(10px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 1180px){
-      .metrics{
-        grid-template-columns:repeat(3,1fr);
-      }
-    }
-
-    @media (max-width: 920px){
-      .compare-grid,
-      .summary-grid{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media (max-width: 720px){
-      .container{
-        width:min(100% - 20px, 1320px);
-      }
-
-      .topbar-inner{
-        min-height:74px;
-      }
-
-      .brand-title{
-        font-size:24px;
-      }
-
-      .brand-subtitle{
-        font-size:13px;
-      }
-
-      .safe-badge{
-        display:none;
-      }
-
-      .subheader-card{
-        padding:18px;
-      }
-
-      .subheader-title{
-        font-size:24px;
-      }
-
-      .subheader-text{
-        font-size:15px;
-      }
-
-      .compare-grid{
-        gap:16px;
-      }
-
-      .input-card{
-        padding:18px;
-      }
-
-      .card-title{
-        font-size:22px;
-      }
-
-      textarea{
-        min-height:260px;
-        font-size:15px;
-      }
-
-      .metrics{
-        grid-template-columns:1fr 1fr;
-      }
-
-      .action-bar{
-        align-items:stretch;
-      }
-
-      .action-group{
         width:100%;
-      }
-
-      .action-group .btn{
         flex:1;
-      }
-
-      .toolbar{
-        align-items:stretch;
-      }
-
-      .tabs,
-      .toolbar-right{
-        width:100%;
-      }
-
-      .search{
-        min-width:0;
-        width:100%;
-      }
     }
 
-    @media (max-width: 480px){
-      .metrics{
+}
+
+
+@media(max-width:440px){
+
+    .metrics{
         grid-template-columns:1fr;
-      }
-
-      .brand-title{
-        font-size:22px;
-      }
-
-      .subheader-title{
-        font-size:22px;
-      }
-
-      .card-header{
-        flex-direction:column;
-      }
-
-      .counter{
-        width:100%;
-        text-align:center;
-      }
-
-      th, td{
-        padding:14px 14px;
-      }
     }
-  </style>
+
+}
+
+</style>
 </head>
+
 <body>
 
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand">
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="topbar">
+
+<div class="container topbar-inner">
+
+    <div class="brand">
+
         <div class="brand-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 5h16M4 12h10M4 19h7" stroke-linecap="round"/>
-            <path d="m16 17 2 2 4-5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8">
+
+                <path d="M12 3v18"/>
+                <path d="M5 6h14"/>
+                <path d="M6 6 3 12h6L6 6Z"/>
+                <path d="m18 6-3 6h6l-3-6Z"/>
+                <path d="M7 21h10"/>
+
+            </svg>
+
         </div>
+
 
         <div>
-          <div class="brand-title">Comparador de Asignaciones</div>
-          <div class="brand-subtitle">Revisión comparativa entre período anterior y actual</div>
-        </div>
-      </div>
 
-      <div class="safe-badge">Procesamiento local · tus datos no salen del navegador</div>
+            <div class="brand-name">
+                Comparador de Asignaciones
+            </div>
+
+            <div class="brand-sub">
+                Control y revisión de movimientos
+            </div>
+
+        </div>
+
     </div>
-  </header>
 
-  <main class="container">
 
-    <section class="subheader">
-      <div class="subheader-card">
-        <div>
-          <h1 class="subheader-title">Cargue ambas listas y obtenga el resultado al instante.</h1>
-          <p class="subheader-text">
-            Pegue la asignación anterior y la asignación actual para identificar códigos nuevos, eliminados, vigentes y duplicados de forma clara y ordenada.
-          </p>
+    <div class="security">
+
+        <span class="security-dot"></span>
+
+        Procesamiento privado en el navegador
+
+    </div>
+
+</div>
+
+</header>
+
+
+
+<main class="container">
+
+
+<!-- =========================================================
+     INTRO COMPACTO
+========================================================= -->
+
+<section class="intro">
+
+    <div>
+
+        <div class="intro-title">
+            Comparación mensual de códigos
         </div>
 
-        <div class="mini-tip">Consejo: puede pegar directamente una columna completa desde Excel.</div>
-      </div>
-    </section>
+        <div class="intro-text">
 
-    <section class="compare-grid">
-      <article class="card input-card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">Asignación anterior</div>
-            <div class="card-subtitle">Esta lista será utilizada como base de comparación.</div>
-          </div>
+            Pegue las asignaciones anterior y actual para identificar
+            incorporaciones, eliminaciones, coincidencias y duplicados.
 
-          <div class="counter"><span id="previousCounter">0</span> registros</div>
         </div>
+
+    </div>
+
+
+    <div class="tip">
+
+        Puede pegar directamente una columna de Excel
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     INPUTS
+========================================================= -->
+
+<section class="compare-grid">
+
+
+<!-- ANTERIOR -->
+
+<article class="panel">
+
+    <div class="panel-head">
+
+        <div class="panel-title-row">
+
+            <div class="panel-number">
+                01
+            </div>
+
+            <div>
+
+                <div class="panel-title">
+                    Asignación anterior
+                </div>
+
+                <div class="panel-description">
+                    Base utilizada para la comparación
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="counter">
+
+            <span id="previousCounter">
+                0
+            </span>
+
+            registros
+
+        </div>
+
+    </div>
+
+
+    <div class="panel-body">
 
         <textarea
-          id="previousInput"
-          spellcheck="false"
-          placeholder="Pegue aquí los códigos anteriores...
+            id="previousInput"
+            spellcheck="false"
+            placeholder="Pegue los códigos anteriores...
 
 Ejemplo:
 100001
@@ -1026,25 +1564,66 @@ Ejemplo:
 100003
 100004"></textarea>
 
+
         <div class="helper">
-          Se aceptan datos separados por líneas, comas, punto y coma o tabulaciones.
-        </div>
-      </article>
 
-      <article class="card input-card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">Asignación actual</div>
-            <div class="card-subtitle">Esta es la lista que desea revisar contra la anterior.</div>
-          </div>
+            Puede pegar códigos separados por líneas, comas,
+            punto y coma o tabulaciones.
 
-          <div class="counter"><span id="currentCounter">0</span> registros</div>
         </div>
+
+    </div>
+
+</article>
+
+
+
+<!-- ACTUAL -->
+
+<article class="panel">
+
+    <div class="panel-head">
+
+        <div class="panel-title-row">
+
+            <div class="panel-number">
+                02
+            </div>
+
+            <div>
+
+                <div class="panel-title">
+                    Asignación actual
+                </div>
+
+                <div class="panel-description">
+                    Período que desea revisar
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="counter">
+
+            <span id="currentCounter">
+                0
+            </span>
+
+            registros
+
+        </div>
+
+    </div>
+
+
+    <div class="panel-body">
 
         <textarea
-          id="currentInput"
-          spellcheck="false"
-          placeholder="Pegue aquí los códigos actuales...
+            id="currentInput"
+            spellcheck="false"
+            placeholder="Pegue los códigos actuales...
 
 Ejemplo:
 100001
@@ -1052,677 +1631,2256 @@ Ejemplo:
 100005
 100006"></textarea>
 
+
         <div class="helper">
-          El sistema ignora espacios vacíos automáticamente y conserva los códigos como texto.
-        </div>
-      </article>
-    </section>
 
-    <section class="action-bar">
-      <div class="action-group">
-        <button id="compareBtn" class="btn btn-primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M8 7h11l-3-3m3 3-3 3M16 17H5l3 3m-3-3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Comparar asignaciones
-        </button>
+            Las líneas vacías se omiten automáticamente.
+            Los códigos se mantienen como texto.
 
-        <button id="sampleBtn" class="btn btn-soft">Cargar ejemplo</button>
-      </div>
-
-      <div class="action-group">
-        <button id="swapBtn" class="btn btn-secondary">Intercambiar listas</button>
-        <button id="clearBtn" class="btn btn-secondary">Limpiar</button>
-      </div>
-    </section>
-
-    <section id="emptyState" class="empty">
-      <h3>Aún no hay una comparación</h3>
-      <p>
-        Ingrese ambas listas y presione <strong>“Comparar asignaciones”</strong> para ver el resumen y el detalle de resultados.
-      </p>
-    </section>
-
-    <section id="resultsSection">
-      <div class="section-head">
-        <h2>Resumen de resultados</h2>
-        <p>Comparación de códigos únicos entre ambas listas.</p>
-      </div>
-
-      <div class="metrics">
-        <article class="metric m-current">
-          <div class="metric-label">Actuales</div>
-          <div id="metricCurrent" class="metric-value">0</div>
-          <div class="metric-note">Códigos únicos en la asignación actual.</div>
-        </article>
-
-        <article class="metric m-new">
-          <div class="metric-label">Nuevos</div>
-          <div id="metricNew" class="metric-value">0</div>
-          <div class="metric-note">Están en la actual pero no en la anterior.</div>
-        </article>
-
-        <article class="metric m-removed">
-          <div class="metric-label">Eliminados</div>
-          <div id="metricRemoved" class="metric-value">0</div>
-          <div class="metric-note">Estaban antes y ya no aparecen ahora.</div>
-        </article>
-
-        <article class="metric m-same">
-          <div class="metric-label">Continúan</div>
-          <div id="metricSame" class="metric-value">0</div>
-          <div class="metric-note">Aparecen tanto antes como ahora.</div>
-        </article>
-
-        <article class="metric m-duplicates">
-          <div class="metric-label">Duplicados</div>
-          <div id="metricDuplicates" class="metric-value">0</div>
-          <div class="metric-note">Detectados dentro de los listados pegados.</div>
-        </article>
-      </div>
-
-      <div class="summary-grid">
-        <article class="summary-card">
-          <div class="summary-title">Distribución visual</div>
-          <div class="summary-text">
-            Vista rápida del tamaño de cada grupo de resultados.
-          </div>
-
-          <div class="bar-group">
-            <div class="bar-row">
-              <span>Asignación actual</span>
-              <strong id="barCurrentNumber">0</strong>
-            </div>
-            <div class="bar-track">
-              <div id="barCurrent" class="bar-fill bar-current"></div>
-            </div>
-          </div>
-
-          <div class="bar-group">
-            <div class="bar-row">
-              <span>Nuevos</span>
-              <strong id="barNewNumber">0</strong>
-            </div>
-            <div class="bar-track">
-              <div id="barNew" class="bar-fill bar-new"></div>
-            </div>
-          </div>
-
-          <div class="bar-group">
-            <div class="bar-row">
-              <span>Eliminados</span>
-              <strong id="barRemovedNumber">0</strong>
-            </div>
-            <div class="bar-track">
-              <div id="barRemoved" class="bar-fill bar-removed"></div>
-            </div>
-          </div>
-
-          <div class="bar-group">
-            <div class="bar-row">
-              <span>Continúan</span>
-              <strong id="barSameNumber">0</strong>
-            </div>
-            <div class="bar-track">
-              <div id="barSame" class="bar-fill bar-same"></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="summary-card highlight-card">
-          <div class="highlight-label">Variación neta</div>
-          <div id="variationNumber" class="highlight-number">0</div>
-          <div id="variationPercent" class="highlight-percent">0.0%</div>
-          <div id="variationDescription" class="highlight-desc">
-            La cantidad de registros se mantiene igual entre ambos períodos.
-          </div>
-        </article>
-      </div>
-
-      <article class="card table-card">
-        <div class="toolbar">
-          <div class="tabs">
-            <button class="tab active" data-tab="new">
-              Nuevos <small id="tabNewCount">0</small>
-            </button>
-
-            <button class="tab" data-tab="removed">
-              Eliminados <small id="tabRemovedCount">0</small>
-            </button>
-
-            <button class="tab" data-tab="same">
-              Continúan <small id="tabSameCount">0</small>
-            </button>
-
-            <button class="tab" data-tab="duplicates">
-              Duplicados <small id="tabDuplicatesCount">0</small>
-            </button>
-
-            <button class="tab" data-tab="all">
-              Todos actuales <small id="tabAllCount">0</small>
-            </button>
-          </div>
-
-          <div class="toolbar-right">
-            <input id="searchInput" class="search" type="text" placeholder="Buscar un código..." />
-
-            <button id="copyBtn" class="icon-btn" title="Copiar resultados">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="9" y="9" width="11" height="11" rx="2"/>
-                <path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/>
-              </svg>
-            </button>
-
-            <button id="downloadBtn" class="icon-btn" title="Descargar CSV">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 3v12"/>
-                <path d="m7 10 5 5 5-5"/>
-                <path d="M5 21h14"/>
-              </svg>
-            </button>
-          </div>
         </div>
 
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Código</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody id="resultBody"></tbody>
-          </table>
-        </div>
-
-        <div class="table-footer">
-          <span id="resultCount">0 registros</span>
-          <span>Comparación realizada localmente en tu navegador</span>
-        </div>
-      </article>
-    </section>
-
-    <div class="footer-note">
-      Comparador de asignaciones · Interfaz sobria, lectura clara y procesamiento local.
     </div>
-  </main>
 
-  <div id="toastWrap" class="toast-wrap"></div>
+</article>
 
-  <script>
-    const previousInput = document.getElementById("previousInput");
-    const currentInput = document.getElementById("currentInput");
+</section>
 
-    const previousCounter = document.getElementById("previousCounter");
-    const currentCounter = document.getElementById("currentCounter");
 
-    const compareBtn = document.getElementById("compareBtn");
-    const sampleBtn = document.getElementById("sampleBtn");
-    const clearBtn = document.getElementById("clearBtn");
-    const swapBtn = document.getElementById("swapBtn");
 
-    const emptyState = document.getElementById("emptyState");
-    const resultsSection = document.getElementById("resultsSection");
+<!-- =========================================================
+     ACTION BAR
+========================================================= -->
 
-    const searchInput = document.getElementById("searchInput");
-    const resultBody = document.getElementById("resultBody");
-    const resultCount = document.getElementById("resultCount");
+<section class="action-bar">
 
-    const copyBtn = document.getElementById("copyBtn");
-    const downloadBtn = document.getElementById("downloadBtn");
+<div class="action-group">
 
-    let activeTab = "new";
+    <button
+        id="compareButton"
+        class="btn btn-primary">
 
-    let results = {
-      previous: [],
-      current: [],
-      newCodes: [],
-      removed: [],
-      same: [],
-      duplicates: []
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2">
+
+            <path d="M8 7h11l-3-3m3 3-3 3"/>
+            <path d="M16 17H5l3 3m-3-3 3-3"/>
+
+        </svg>
+
+        Comparar asignaciones
+
+    </button>
+
+
+    <button
+        id="exampleButton"
+        class="btn btn-gold">
+
+        Cargar ejemplo
+
+    </button>
+
+</div>
+
+
+<div class="action-group">
+
+    <button
+        id="swapButton"
+        class="btn btn-outline">
+
+        Intercambiar
+
+    </button>
+
+
+    <button
+        id="clearButton"
+        class="btn btn-outline">
+
+        Limpiar
+
+    </button>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     EMPTY STATE
+========================================================= -->
+
+<section
+    id="emptyState"
+    class="empty">
+
+    <div>
+
+        <strong>
+            Sin comparación activa
+        </strong>
+
+        <span>
+
+            Ingrese las dos asignaciones y presione
+            “Comparar asignaciones”.
+
+        </span>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     RESULTS
+========================================================= -->
+
+<section id="results">
+
+
+<div class="results-head">
+
+    <h2>
+        Resultado de la comparación
+    </h2>
+
+    <p>
+        Resumen calculado con base en los códigos únicos encontrados.
+    </p>
+
+</div>
+
+
+
+<!-- METRICS -->
+
+<div class="metrics">
+
+
+<article class="metric metric-current">
+
+    <div class="metric-label">
+        Asignación actual
+    </div>
+
+    <div
+        id="metricCurrent"
+        class="metric-number">
+
+        0
+
+    </div>
+
+    <div class="metric-note">
+        códigos únicos
+    </div>
+
+</article>
+
+
+
+<article class="metric metric-new">
+
+    <div class="metric-label">
+        Nuevos
+    </div>
+
+    <div
+        id="metricNew"
+        class="metric-number">
+
+        0
+
+    </div>
+
+    <div class="metric-note">
+        incorporaciones
+    </div>
+
+</article>
+
+
+
+<article class="metric metric-removed">
+
+    <div class="metric-label">
+        Eliminados
+    </div>
+
+    <div
+        id="metricRemoved"
+        class="metric-number">
+
+        0
+
+    </div>
+
+    <div class="metric-note">
+        ya no aparecen
+    </div>
+
+</article>
+
+
+
+<article class="metric metric-same">
+
+    <div class="metric-label">
+        Continúan
+    </div>
+
+    <div
+        id="metricSame"
+        class="metric-number">
+
+        0
+
+    </div>
+
+    <div class="metric-note">
+        permanecen en ambos
+    </div>
+
+</article>
+
+
+
+<article class="metric metric-duplicates">
+
+    <div class="metric-label">
+        Duplicados
+    </div>
+
+    <div
+        id="metricDuplicates"
+        class="metric-number">
+
+        0
+
+    </div>
+
+    <div class="metric-note">
+        repetidos detectados
+    </div>
+
+</article>
+
+</div>
+
+
+
+<!-- SUMMARY -->
+
+<div class="summary-grid">
+
+
+<article class="summary-card">
+
+    <div class="summary-title">
+        Distribución
+    </div>
+
+    <div class="summary-subtitle">
+        Vista proporcional de los movimientos detectados.
+    </div>
+
+
+
+    <div class="progress">
+
+        <div class="progress-top">
+
+            <span>
+                Asignación actual
+            </span>
+
+            <strong id="barCurrentNumber">
+                0
+            </strong>
+
+        </div>
+
+        <div class="progress-track">
+
+            <div
+                id="barCurrent"
+                class="progress-bar progress-current">
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="progress">
+
+        <div class="progress-top">
+
+            <span>
+                Nuevos
+            </span>
+
+            <strong id="barNewNumber">
+                0
+            </strong>
+
+        </div>
+
+        <div class="progress-track">
+
+            <div
+                id="barNew"
+                class="progress-bar progress-new">
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="progress">
+
+        <div class="progress-top">
+
+            <span>
+                Eliminados
+            </span>
+
+            <strong id="barRemovedNumber">
+                0
+            </strong>
+
+        </div>
+
+        <div class="progress-track">
+
+            <div
+                id="barRemoved"
+                class="progress-bar progress-removed">
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="progress">
+
+        <div class="progress-top">
+
+            <span>
+                Continúan
+            </span>
+
+            <strong id="barSameNumber">
+                0
+            </strong>
+
+        </div>
+
+        <div class="progress-track">
+
+            <div
+                id="barSame"
+                class="progress-bar progress-same">
+            </div>
+
+        </div>
+
+    </div>
+
+</article>
+
+
+
+<article class="summary-card variation-card">
+
+    <div class="variation-label">
+        Variación neta
+    </div>
+
+    <div
+        id="variationNumber"
+        class="variation-number">
+
+        0
+
+    </div>
+
+    <div
+        id="variationPercent"
+        class="variation-percent">
+
+        0.0%
+
+    </div>
+
+    <div
+        id="variationDescription"
+        class="variation-description">
+
+        La cantidad de registros se mantiene sin cambios.
+
+    </div>
+
+</article>
+
+</div>
+
+
+
+<!-- =========================================================
+     TABLE
+========================================================= -->
+
+<article class="results-card">
+
+
+<div class="toolbar">
+
+
+<div class="tabs">
+
+    <button
+        class="tab active"
+        data-tab="new">
+
+        Nuevos
+
+        <span id="tabNew">
+            0
+        </span>
+
+    </button>
+
+
+    <button
+        class="tab"
+        data-tab="removed">
+
+        Eliminados
+
+        <span id="tabRemoved">
+            0
+        </span>
+
+    </button>
+
+
+    <button
+        class="tab"
+        data-tab="same">
+
+        Continúan
+
+        <span id="tabSame">
+            0
+        </span>
+
+    </button>
+
+
+    <button
+        class="tab"
+        data-tab="duplicates">
+
+        Duplicados
+
+        <span id="tabDuplicates">
+            0
+        </span>
+
+    </button>
+
+
+    <button
+        class="tab"
+        data-tab="all">
+
+        Todos actuales
+
+        <span id="tabAll">
+            0
+        </span>
+
+    </button>
+
+</div>
+
+
+
+<div class="toolbar-right">
+
+    <input
+        id="searchInput"
+        class="search"
+        type="text"
+        placeholder="Buscar código...">
+
+
+    <button
+        id="copyButton"
+        class="icon-btn"
+        title="Copiar resultados">
+
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2">
+
+            <rect
+                x="9"
+                y="9"
+                width="11"
+                height="11"
+                rx="2"/>
+
+            <path
+                d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/>
+
+        </svg>
+
+    </button>
+
+
+    <button
+        id="downloadButton"
+        class="icon-btn"
+        title="Descargar CSV">
+
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2">
+
+            <path d="M12 3v12"/>
+            <path d="m7 10 5 5 5-5"/>
+            <path d="M5 21h14"/>
+
+        </svg>
+
+    </button>
+
+</div>
+
+</div>
+
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+    <th>#</th>
+
+    <th>Código</th>
+
+    <th>Estado</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="tableBody">
+</tbody>
+
+</table>
+
+</div>
+
+
+
+<div class="table-footer">
+
+    <span id="resultCount">
+        0 registros
+    </span>
+
+    <span>
+        Procesamiento local
+    </span>
+
+</div>
+
+</article>
+
+</section>
+
+
+
+<footer class="footer">
+
+    <span>
+        Comparador de Asignaciones
+    </span>
+
+    <span>
+        Los datos ingresados no son enviados a ningún servidor
+    </span>
+
+</footer>
+
+
+</main>
+
+
+
+<div
+    id="toastArea"
+    class="toast-area">
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   ELEMENTOS
+========================================================= */
+
+const previousInput =
+    document.getElementById("previousInput");
+
+const currentInput =
+    document.getElementById("currentInput");
+
+
+const previousCounter =
+    document.getElementById("previousCounter");
+
+const currentCounter =
+    document.getElementById("currentCounter");
+
+
+const emptyState =
+    document.getElementById("emptyState");
+
+const resultsSection =
+    document.getElementById("results");
+
+
+const tableBody =
+    document.getElementById("tableBody");
+
+const resultCount =
+    document.getElementById("resultCount");
+
+
+const searchInput =
+    document.getElementById("searchInput");
+
+
+let activeTab =
+    "new";
+
+
+let results = {
+
+    previous:[],
+
+    current:[],
+
+    newCodes:[],
+
+    removed:[],
+
+    same:[],
+
+    duplicates:[]
+
+};
+
+
+
+/* =========================================================
+   LEER CÓDIGOS
+========================================================= */
+
+function parseCodes(text){
+
+    if(!text){
+        return [];
+    }
+
+
+    return text
+
+        .split(/[\n\r\t,;]+/)
+
+        .map(function(code){
+
+            return code.trim();
+
+        })
+
+        .filter(Boolean);
+
+}
+
+
+
+/* =========================================================
+   ÚNICOS
+========================================================= */
+
+function uniqueCodes(codes){
+
+    return [
+        ...new Set(codes)
+    ];
+
+}
+
+
+
+/* =========================================================
+   DUPLICADOS
+========================================================= */
+
+function findDuplicates(codes){
+
+    const map =
+        new Map();
+
+
+    codes.forEach(function(code){
+
+        map.set(
+
+            code,
+
+            (map.get(code) || 0) + 1
+
+        );
+
+    });
+
+
+    return [
+        ...map.entries()
+    ]
+
+    .filter(function(item){
+
+        return item[1] > 1;
+
+    })
+
+    .map(function(item){
+
+        return {
+
+            code:item[0],
+
+            count:item[1]
+
+        };
+
+    });
+
+}
+
+
+
+/* =========================================================
+   FORMATO
+========================================================= */
+
+function formatNumber(number){
+
+    return new Intl.NumberFormat(
+        "es-GT"
+    ).format(number);
+
+}
+
+
+
+/* =========================================================
+   CONTADORES
+========================================================= */
+
+function updateCounters(){
+
+    previousCounter.textContent =
+        formatNumber(
+            parseCodes(
+                previousInput.value
+            ).length
+        );
+
+
+    currentCounter.textContent =
+        formatNumber(
+            parseCodes(
+                currentInput.value
+            ).length
+        );
+
+}
+
+
+
+previousInput.addEventListener(
+    "input",
+    updateCounters
+);
+
+
+currentInput.addEventListener(
+    "input",
+    updateCounters
+);
+
+
+
+/* =========================================================
+   COMPARAR
+========================================================= */
+
+function compare(){
+
+    const previousRaw =
+        parseCodes(
+            previousInput.value
+        );
+
+
+    const currentRaw =
+        parseCodes(
+            currentInput.value
+        );
+
+
+    if(
+        previousRaw.length === 0 &&
+        currentRaw.length === 0
+    ){
+
+        toast(
+            "Ingrese los códigos antes de realizar la comparación."
+        );
+
+        return;
+
+    }
+
+
+    const previous =
+        uniqueCodes(
+            previousRaw
+        );
+
+
+    const current =
+        uniqueCodes(
+            currentRaw
+        );
+
+
+    const previousSet =
+        new Set(previous);
+
+
+    const currentSet =
+        new Set(current);
+
+
+
+    const newCodes =
+        current.filter(function(code){
+
+            return !previousSet.has(code);
+
+        });
+
+
+
+    const removed =
+        previous.filter(function(code){
+
+            return !currentSet.has(code);
+
+        });
+
+
+
+    const same =
+        current.filter(function(code){
+
+            return previousSet.has(code);
+
+        });
+
+
+
+    const oldDuplicates =
+        findDuplicates(
+            previousRaw
+        ).map(function(item){
+
+            return {
+
+                code:item.code,
+
+                count:item.count,
+
+                period:"Anterior"
+
+            };
+
+        });
+
+
+
+    const currentDuplicates =
+        findDuplicates(
+            currentRaw
+        ).map(function(item){
+
+            return {
+
+                code:item.code,
+
+                count:item.count,
+
+                period:"Actual"
+
+            };
+
+        });
+
+
+
+    results = {
+
+        previous:previous,
+
+        current:current,
+
+        newCodes:newCodes,
+
+        removed:removed,
+
+        same:same,
+
+        duplicates:[
+            ...oldDuplicates,
+            ...currentDuplicates
+        ]
+
     };
 
-    function parseCodes(text) {
-      if (!text) return [];
-      return text
-        .split(/[\n\r,;\t]+/)
-        .map(item => item.trim())
-        .filter(Boolean);
-    }
 
-    function unique(array) {
-      return [...new Set(array)];
-    }
+    activeTab =
+        "new";
 
-    function findDuplicates(array) {
-      const map = new Map();
-      array.forEach(code => map.set(code, (map.get(code) || 0) + 1));
 
-      return [...map.entries()]
-        .filter(([, qty]) => qty > 1)
-        .map(([code, qty]) => ({ code, qty }));
-    }
+    searchInput.value =
+        "";
 
-    function formatNumber(value) {
-      return new Intl.NumberFormat("es-GT").format(value);
-    }
 
-    function updateInputCounters() {
-      previousCounter.textContent = formatNumber(parseCodes(previousInput.value).length);
-      currentCounter.textContent = formatNumber(parseCodes(currentInput.value).length);
-    }
+    updateDashboard();
 
-    function animateValue(elementId, target) {
-      const el = document.getElementById(elementId);
-      const duration = 450;
-      const startTime = performance.now();
+    updateTabs();
 
-      function frame(now) {
-        const progress = Math.min((now - startTime) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const value = Math.round(target * eased);
-        el.textContent = formatNumber(value);
+    renderTable();
 
-        if (progress < 1) requestAnimationFrame(frame);
-      }
 
-      requestAnimationFrame(frame);
-    }
+    emptyState.style.display =
+        "none";
 
-    function compareLists() {
-      const previousRaw = parseCodes(previousInput.value);
-      const currentRaw = parseCodes(currentInput.value);
 
-      if (!previousRaw.length && !currentRaw.length) {
-        showToast("Primero debes ingresar al menos una lista.");
-        return;
-      }
+    resultsSection.style.display =
+        "block";
 
-      const previous = unique(previousRaw);
-      const current = unique(currentRaw);
 
-      const previousSet = new Set(previous);
-      const currentSet = new Set(current);
+    resultsSection.scrollIntoView({
 
-      const newCodes = current.filter(code => !previousSet.has(code));
-      const removed = previous.filter(code => !currentSet.has(code));
-      const same = current.filter(code => previousSet.has(code));
+        behavior:"smooth",
 
-      const previousDuplicates = findDuplicates(previousRaw).map(item => ({
-        code: item.code,
-        qty: item.qty,
-        period: "Anterior"
-      }));
+        block:"start"
 
-      const currentDuplicates = findDuplicates(currentRaw).map(item => ({
-        code: item.code,
-        qty: item.qty,
-        period: "Actual"
-      }));
+    });
 
-      results = {
-        previous,
+
+    toast(
+        "Comparación realizada correctamente."
+    );
+
+}
+
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateDashboard(){
+
+    const current =
+        results.current.length;
+
+    const previous =
+        results.previous.length;
+
+    const newCount =
+        results.newCodes.length;
+
+    const removed =
+        results.removed.length;
+
+    const same =
+        results.same.length;
+
+    const duplicates =
+        results.duplicates.length;
+
+
+    animateNumber(
+        "metricCurrent",
+        current
+    );
+
+
+    animateNumber(
+        "metricNew",
+        newCount
+    );
+
+
+    animateNumber(
+        "metricRemoved",
+        removed
+    );
+
+
+    animateNumber(
+        "metricSame",
+        same
+    );
+
+
+    animateNumber(
+        "metricDuplicates",
+        duplicates
+    );
+
+
+
+    document.getElementById(
+        "tabNew"
+    ).textContent =
+        formatNumber(newCount);
+
+
+    document.getElementById(
+        "tabRemoved"
+    ).textContent =
+        formatNumber(removed);
+
+
+    document.getElementById(
+        "tabSame"
+    ).textContent =
+        formatNumber(same);
+
+
+    document.getElementById(
+        "tabDuplicates"
+    ).textContent =
+        formatNumber(duplicates);
+
+
+    document.getElementById(
+        "tabAll"
+    ).textContent =
+        formatNumber(current);
+
+
+
+    const max =
+        Math.max(
+            current,
+            newCount,
+            removed,
+            same,
+            1
+        );
+
+
+    setBar(
+        "barCurrent",
+        "barCurrentNumber",
         current,
-        newCodes,
+        max
+    );
+
+
+    setBar(
+        "barNew",
+        "barNewNumber",
+        newCount,
+        max
+    );
+
+
+    setBar(
+        "barRemoved",
+        "barRemovedNumber",
         removed,
+        max
+    );
+
+
+    setBar(
+        "barSame",
+        "barSameNumber",
         same,
-        duplicates: [...previousDuplicates, ...currentDuplicates]
-      };
+        max
+    );
 
-      updateDashboard();
 
-      activeTab = "new";
-      searchInput.value = "";
-      updateTabs();
-      renderTable();
 
-      emptyState.style.display = "none";
-      resultsSection.style.display = "block";
+    const difference =
+        current - previous;
 
-      resultsSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
 
-      showToast("Comparación realizada correctamente.");
+    let percentage =
+        0;
+
+
+    if(previous > 0){
+
+        percentage =
+            (
+                difference /
+                previous
+            )
+            *
+            100;
+
+    }
+    else if(current > 0){
+
+        percentage =
+            100;
+
     }
 
-    function updateDashboard() {
-      const currentTotal = results.current.length;
-      const previousTotal = results.previous.length;
-      const newTotal = results.newCodes.length;
-      const removedTotal = results.removed.length;
-      const sameTotal = results.same.length;
-      const duplicateTotal = results.duplicates.length;
 
-      animateValue("metricCurrent", currentTotal);
-      animateValue("metricNew", newTotal);
-      animateValue("metricRemoved", removedTotal);
-      animateValue("metricSame", sameTotal);
-      animateValue("metricDuplicates", duplicateTotal);
+    document.getElementById(
+        "variationNumber"
+    ).textContent =
 
-      document.getElementById("tabNewCount").textContent = formatNumber(newTotal);
-      document.getElementById("tabRemovedCount").textContent = formatNumber(removedTotal);
-      document.getElementById("tabSameCount").textContent = formatNumber(sameTotal);
-      document.getElementById("tabDuplicatesCount").textContent = formatNumber(duplicateTotal);
-      document.getElementById("tabAllCount").textContent = formatNumber(currentTotal);
+        difference > 0
 
-      const max = Math.max(currentTotal, newTotal, removedTotal, sameTotal, 1);
+        ? "+" + formatNumber(difference)
 
-      setBar("barCurrent", "barCurrentNumber", currentTotal, max);
-      setBar("barNew", "barNewNumber", newTotal, max);
-      setBar("barRemoved", "barRemovedNumber", removedTotal, max);
-      setBar("barSame", "barSameNumber", sameTotal, max);
+        : formatNumber(difference);
 
-      const difference = currentTotal - previousTotal;
-      let percent = 0;
 
-      if (previousTotal > 0) {
-        percent = (difference / previousTotal) * 100;
-      } else if (currentTotal > 0) {
-        percent = 100;
-      }
 
-      const variationNumber = document.getElementById("variationNumber");
-      const variationPercent = document.getElementById("variationPercent");
-      const variationDescription = document.getElementById("variationDescription");
+    document.getElementById(
+        "variationPercent"
+    ).textContent =
 
-      variationNumber.textContent =
-        difference > 0 ? "+" + formatNumber(difference) : formatNumber(difference);
+        (
+            percentage > 0
+            ? "+"
+            : ""
+        )
 
-      variationPercent.textContent =
-        (percent > 0 ? "+" : "") +
-        percent.toLocaleString("es-GT", {
-          minimumFractionDigits: 1,
-          maximumFractionDigits: 1
-        }) +
+        +
+
+        percentage.toLocaleString(
+            "es-GT",
+            {
+                minimumFractionDigits:1,
+                maximumFractionDigits:1
+            }
+        )
+
+        +
+
         "% respecto al período anterior";
 
-      if (difference > 0) {
-        variationDescription.textContent =
-          "La lista actual tiene más códigos que la lista anterior.";
-      } else if (difference < 0) {
-        variationDescription.textContent =
-          "La lista actual tiene menos códigos que la lista anterior.";
-      } else {
-        variationDescription.textContent =
-          "La cantidad total de códigos se mantiene igual entre ambos períodos.";
-      }
+
+
+    const description =
+        document.getElementById(
+            "variationDescription"
+        );
+
+
+    if(difference > 0){
+
+        description.textContent =
+            "La asignación actual contiene más códigos que la anterior.";
+
+    }
+    else if(difference < 0){
+
+        description.textContent =
+            "La asignación actual contiene menos códigos que la anterior.";
+
+    }
+    else{
+
+        description.textContent =
+            "La cantidad de registros se mantiene sin cambios.";
+
     }
 
-    function setBar(barId, numberId, value, max) {
-      document.getElementById(numberId).textContent = formatNumber(value);
-      const width = value === 0 ? 0 : Math.max(3, (value / max) * 100);
-      const bar = document.getElementById(barId);
-      bar.style.width = "0%";
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          bar.style.width = width + "%";
-        }, 60);
-      });
+}
+
+
+
+/* =========================================================
+   NUMBER ANIMATION
+========================================================= */
+
+function animateNumber(
+    id,
+    target
+){
+
+    const element =
+        document.getElementById(id);
+
+
+    const duration =
+        420;
+
+
+    const start =
+        performance.now();
+
+
+    function frame(now){
+
+        const progress =
+            Math.min(
+                (
+                    now - start
+                )
+                /
+                duration,
+                1
+            );
+
+
+        const eased =
+            1 -
+            Math.pow(
+                1 - progress,
+                3
+            );
+
+
+        element.textContent =
+            formatNumber(
+                Math.round(
+                    target * eased
+                )
+            );
+
+
+        if(progress < 1){
+
+            requestAnimationFrame(
+                frame
+            );
+
+        }
+
     }
 
-    function getRowsForActiveTab() {
-      switch (activeTab) {
-        case "new":
-          return results.newCodes.map(code => ({
-            code,
-            status: "Nuevo",
-            badge: "badge-new"
-          }));
 
-        case "removed":
-          return results.removed.map(code => ({
-            code,
-            status: "Eliminado",
-            badge: "badge-removed"
-          }));
+    requestAnimationFrame(
+        frame
+    );
 
-        case "same":
-          return results.same.map(code => ({
-            code,
-            status: "Continúa",
-            badge: "badge-same"
-          }));
+}
 
-        case "duplicates":
-          return results.duplicates.map(item => ({
-            code: item.code,
-            status: `${item.qty} veces · ${item.period}`,
-            badge: "badge-duplicate"
-          }));
 
-        case "all":
-          return results.current.map(code => ({
-            code,
-            status: results.newCodes.includes(code) ? "Nuevo" : "Continúa",
-            badge: results.newCodes.includes(code) ? "badge-new" : "badge-same"
-          }));
 
-        default:
-          return [];
-      }
+/* =========================================================
+   PROGRESS BAR
+========================================================= */
+
+function setBar(
+    barId,
+    numberId,
+    value,
+    max
+){
+
+    document.getElementById(
+        numberId
+    ).textContent =
+        formatNumber(value);
+
+
+    const percentage =
+
+        value === 0
+
+        ? 0
+
+        : Math.max(
+            2,
+            value / max * 100
+        );
+
+
+    const bar =
+        document.getElementById(
+            barId
+        );
+
+
+    bar.style.width =
+        "0%";
+
+
+    setTimeout(function(){
+
+        bar.style.width =
+            percentage + "%";
+
+    },80);
+
+}
+
+
+
+/* =========================================================
+   GET ROWS
+========================================================= */
+
+function getRows(){
+
+    if(activeTab === "new"){
+
+        return results
+        .newCodes
+        .map(function(code){
+
+            return {
+
+                code:code,
+
+                status:"Nuevo",
+
+                className:
+                    "status-new"
+
+            };
+
+        });
+
     }
 
-    function getFilteredRows() {
-      const rows = getRowsForActiveTab();
-      const search = searchInput.value.trim().toLowerCase();
 
-      if (!search) return rows;
-      return rows.filter(row => row.code.toLowerCase().includes(search));
+
+    if(activeTab === "removed"){
+
+        return results
+        .removed
+        .map(function(code){
+
+            return {
+
+                code:code,
+
+                status:"Eliminado",
+
+                className:
+                    "status-removed"
+
+            };
+
+        });
+
     }
 
-    function renderTable() {
-      const rows = getFilteredRows();
-      resultBody.innerHTML = "";
 
-      if (!rows.length) {
-        resultBody.innerHTML = `
-          <tr>
-            <td colspan="3" class="empty-row">No se encontraron registros en esta vista.</td>
-          </tr>
-        `;
-        resultCount.textContent = "0 registros";
-        return;
-      }
 
-      resultBody.innerHTML = rows.map((row, index) => `
-        <tr>
-          <td class="col-index">${index + 1}</td>
-          <td class="code">${escapeHtml(row.code)}</td>
-          <td><span class="status-badge ${row.badge}">${escapeHtml(row.status)}</span></td>
-        </tr>
-      `).join("");
+    if(activeTab === "same"){
 
-      resultCount.textContent = `${formatNumber(rows.length)} ${rows.length === 1 ? "registro" : "registros"}`;
+        return results
+        .same
+        .map(function(code){
+
+            return {
+
+                code:code,
+
+                status:"Continúa",
+
+                className:
+                    "status-same"
+
+            };
+
+        });
+
     }
 
-    function updateTabs() {
-      document.querySelectorAll(".tab").forEach(tab => {
-        tab.classList.toggle("active", tab.dataset.tab === activeTab);
-      });
+
+
+    if(activeTab === "duplicates"){
+
+        return results
+        .duplicates
+        .map(function(item){
+
+            return {
+
+                code:item.code,
+
+                status:
+                    item.count +
+                    " veces · " +
+                    item.period,
+
+                className:
+                    "status-duplicate"
+
+            };
+
+        });
+
     }
 
-    function escapeHtml(text) {
-      return String(text)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
 
-    async function copyResults() {
-      const rows = getFilteredRows();
 
-      if (!rows.length) {
-        showToast("No hay códigos para copiar.");
-        return;
-      }
+    return results
+    .current
+    .map(function(code){
 
-      const text = rows.map(row => row.code).join("\n");
+        const isNew =
+            results
+            .newCodes
+            .includes(code);
 
-      try {
-        await navigator.clipboard.writeText(text);
-        showToast(`${formatNumber(rows.length)} códigos copiados.`);
-      } catch {
-        const temp = document.createElement("textarea");
-        temp.value = text;
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand("copy");
-        temp.remove();
-        showToast("Códigos copiados.");
-      }
-    }
 
-    function downloadCSV() {
-      const rows = getFilteredRows();
+        return {
 
-      if (!rows.length) {
-        showToast("No hay datos para exportar.");
-        return;
-      }
+            code:code,
 
-      const csvRows = [
-        ["Codigo", "Estado"],
-        ...rows.map(row => [row.code, row.status])
-      ];
+            status:
+                isNew
+                ? "Nuevo"
+                : "Continúa",
 
-      const csv =
-        "\uFEFF" +
-        csvRows
-          .map(row =>
-            row.map(value => `"${String(value).replaceAll('"', '""')}"`).join(";")
-          )
-          .join("\n");
+            className:
+                isNew
+                ? "status-new"
+                : "status-same"
 
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
+        };
 
-      const names = {
-        new: "codigos_nuevos",
-        removed: "codigos_eliminados",
-        same: "codigos_que_continuan",
-        duplicates: "codigos_duplicados",
-        all: "asignacion_actual"
-      };
-
-      link.href = url;
-      link.download = (names[activeTab] || "comparacion") + ".csv";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
-
-      showToast("Archivo CSV descargado.");
-    }
-
-    function loadSample() {
-      previousInput.value = [
-        "AF-1001",
-        "AF-1002",
-        "AF-1003",
-        "AF-1004",
-        "AF-1005",
-        "AF-1006",
-        "AF-1007",
-        "AF-1008",
-        "AF-1008",
-        "AF-1009"
-      ].join("\n");
-
-      currentInput.value = [
-        "AF-1001",
-        "AF-1002",
-        "AF-1004",
-        "AF-1005",
-        "AF-1006",
-        "AF-1010",
-        "AF-1011",
-        "AF-1012",
-        "AF-1012"
-      ].join("\n");
-
-      updateInputCounters();
-      compareLists();
-    }
-
-    function clearAll() {
-      previousInput.value = "";
-      currentInput.value = "";
-      searchInput.value = "";
-
-      results = {
-        previous: [],
-        current: [],
-        newCodes: [],
-        removed: [],
-        same: [],
-        duplicates: []
-      };
-
-      updateInputCounters();
-      resultsSection.style.display = "none";
-      emptyState.style.display = "block";
-      previousInput.focus();
-
-      showToast("Datos limpiados.");
-    }
-
-    function swapLists() {
-      const temp = previousInput.value;
-      previousInput.value = currentInput.value;
-      currentInput.value = temp;
-      updateInputCounters();
-      showToast("Las listas fueron intercambiadas.");
-    }
-
-    function showToast(message) {
-      const wrap = document.getElementById("toastWrap");
-      const toast = document.createElement("div");
-      toast.className = "toast";
-      toast.textContent = message;
-      wrap.appendChild(toast);
-
-      setTimeout(() => {
-        toast.style.opacity = "0";
-        toast.style.transform = "translateY(8px)";
-        toast.style.transition = "all .2s ease";
-        setTimeout(() => toast.remove(), 220);
-      }, 2600);
-    }
-
-    previousInput.addEventListener("input", updateInputCounters);
-    currentInput.addEventListener("input", updateInputCounters);
-
-    compareBtn.addEventListener("click", compareLists);
-    sampleBtn.addEventListener("click", loadSample);
-    clearBtn.addEventListener("click", clearAll);
-    swapBtn.addEventListener("click", swapLists);
-
-    searchInput.addEventListener("input", renderTable);
-    copyBtn.addEventListener("click", copyResults);
-    downloadBtn.addEventListener("click", downloadCSV);
-
-    document.querySelectorAll(".tab").forEach(tab => {
-      tab.addEventListener("click", () => {
-        activeTab = tab.dataset.tab;
-        searchInput.value = "";
-        updateTabs();
-        renderTable();
-      });
     });
 
-    document.addEventListener("keydown", event => {
-      if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-        compareLists();
-      }
-    });
+}
 
-    updateInputCounters();
-  </script>
+
+
+/* =========================================================
+   SEARCHED ROWS
+========================================================= */
+
+function filteredRows(){
+
+    const search =
+        searchInput
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const rows =
+        getRows();
+
+
+    if(!search){
+
+        return rows;
+
+    }
+
+
+    return rows.filter(
+        function(row){
+
+            return row
+                .code
+                .toLowerCase()
+                .includes(search);
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+function renderTable(){
+
+    const rows =
+        filteredRows();
+
+
+    tableBody.innerHTML =
+        "";
+
+
+    if(rows.length === 0){
+
+        tableBody.innerHTML =
+
+            '<tr>' +
+
+            '<td class="empty-row" colspan="3">' +
+
+            'No se encontraron registros en esta categoría.' +
+
+            '</td>' +
+
+            '</tr>';
+
+
+        resultCount.textContent =
+            "0 registros";
+
+
+        return;
+
+    }
+
+
+    rows.forEach(
+        function(row,index){
+
+            const tr =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const tdNumber =
+                document.createElement(
+                    "td"
+                );
+
+
+            tdNumber.className =
+                "row-index";
+
+
+            tdNumber.textContent =
+                index + 1;
+
+
+
+            const tdCode =
+                document.createElement(
+                    "td"
+                );
+
+
+            tdCode.className =
+                "code";
+
+
+            tdCode.textContent =
+                row.code;
+
+
+
+            const tdStatus =
+                document.createElement(
+                    "td"
+                );
+
+
+            const badge =
+                document.createElement(
+                    "span"
+                );
+
+
+            badge.className =
+
+                "status " +
+                row.className;
+
+
+            badge.textContent =
+                row.status;
+
+
+            tdStatus.appendChild(
+                badge
+            );
+
+
+            tr.appendChild(
+                tdNumber
+            );
+
+
+            tr.appendChild(
+                tdCode
+            );
+
+
+            tr.appendChild(
+                tdStatus
+            );
+
+
+            tableBody.appendChild(
+                tr
+            );
+
+        }
+    );
+
+
+    resultCount.textContent =
+
+        formatNumber(
+            rows.length
+        )
+
+        +
+
+        (
+            rows.length === 1
+            ? " registro"
+            : " registros"
+        );
+
+}
+
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+function updateTabs(){
+
+    document
+    .querySelectorAll(
+        ".tab"
+    )
+    .forEach(
+        function(tab){
+
+            tab.classList.toggle(
+
+                "active",
+
+                tab.dataset.tab ===
+                activeTab
+
+            );
+
+        }
+    );
+
+}
+
+
+
+document
+.querySelectorAll(
+    ".tab"
+)
+.forEach(
+    function(tab){
+
+        tab.addEventListener(
+            "click",
+            function(){
+
+                activeTab =
+                    this.dataset.tab;
+
+
+                searchInput.value =
+                    "";
+
+
+                updateTabs();
+
+                renderTable();
+
+            }
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+searchInput.addEventListener(
+    "input",
+    renderTable
+);
+
+
+
+/* =========================================================
+   COPY
+========================================================= */
+
+document
+.getElementById(
+    "copyButton"
+)
+.addEventListener(
+    "click",
+    async function(){
+
+        const rows =
+            filteredRows();
+
+
+        if(rows.length === 0){
+
+            toast(
+                "No hay códigos para copiar."
+            );
+
+            return;
+
+        }
+
+
+        const text =
+            rows
+            .map(function(row){
+
+                return row.code;
+
+            })
+            .join("\n");
+
+
+        try{
+
+            await navigator
+            .clipboard
+            .writeText(text);
+
+
+            toast(
+                rows.length +
+                " códigos copiados."
+            );
+
+        }
+        catch(error){
+
+            const textarea =
+                document.createElement(
+                    "textarea"
+                );
+
+
+            textarea.value =
+                text;
+
+
+            document.body.appendChild(
+                textarea
+            );
+
+
+            textarea.select();
+
+
+            document.execCommand(
+                "copy"
+            );
+
+
+            textarea.remove();
+
+
+            toast(
+                "Códigos copiados."
+            );
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   CSV
+========================================================= */
+
+document
+.getElementById(
+    "downloadButton"
+)
+.addEventListener(
+    "click",
+    function(){
+
+        const rows =
+            filteredRows();
+
+
+        if(rows.length === 0){
+
+            toast(
+                "No hay información para exportar."
+            );
+
+            return;
+
+        }
+
+
+        const csvRows = [
+
+            [
+                "Codigo",
+                "Estado"
+            ],
+
+            ...rows.map(
+                function(row){
+
+                    return [
+
+                        row.code,
+
+                        row.status
+
+                    ];
+
+                }
+            )
+
+        ];
+
+
+        const csv =
+
+            "\uFEFF"
+
+            +
+
+            csvRows.map(
+                function(row){
+
+                    return row
+                    .map(
+                        function(value){
+
+                            return (
+                                '"' +
+                                String(value)
+                                .replaceAll(
+                                    '"',
+                                    '""'
+                                )
+                                +
+                                '"'
+                            );
+
+                        }
+                    )
+                    .join(";");
+
+                }
+            )
+            .join("\n");
+
+
+        const blob =
+            new Blob(
+                [csv],
+                {
+                    type:
+                        "text/csv;charset=utf-8;"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        const names = {
+
+            new:
+                "codigos_nuevos",
+
+            removed:
+                "codigos_eliminados",
+
+            same:
+                "codigos_continuan",
+
+            duplicates:
+                "codigos_duplicados",
+
+            all:
+                "asignacion_actual"
+
+        };
+
+
+        link.href =
+            url;
+
+
+        link.download =
+
+            (
+                names[activeTab]
+                ||
+                "comparacion"
+            )
+
+            +
+
+            ".csv";
+
+
+        document.body.appendChild(
+            link
+        );
+
+
+        link.click();
+
+        link.remove();
+
+
+        URL.revokeObjectURL(
+            url
+        );
+
+
+        toast(
+            "Archivo CSV generado."
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   SAMPLE
+========================================================= */
+
+document
+.getElementById(
+    "exampleButton"
+)
+.addEventListener(
+    "click",
+    function(){
+
+        previousInput.value = [
+
+            "AS-1001",
+            "AS-1002",
+            "AS-1003",
+            "AS-1004",
+            "AS-1005",
+            "AS-1006",
+            "AS-1007",
+            "AS-1008",
+            "AS-1008",
+            "AS-1009"
+
+        ].join("\n");
+
+
+        currentInput.value = [
+
+            "AS-1001",
+            "AS-1002",
+            "AS-1004",
+            "AS-1005",
+            "AS-1006",
+            "AS-1008",
+            "AS-1009",
+            "AS-1010",
+            "AS-1011",
+            "AS-1012"
+
+        ].join("\n");
+
+
+        updateCounters();
+
+        compare();
+
+    }
+);
+
+
+
+/* =========================================================
+   SWAP
+========================================================= */
+
+document
+.getElementById(
+    "swapButton"
+)
+.addEventListener(
+    "click",
+    function(){
+
+        const temporary =
+            previousInput.value;
+
+
+        previousInput.value =
+            currentInput.value;
+
+
+        currentInput.value =
+            temporary;
+
+
+        updateCounters();
+
+
+        toast(
+            "Las asignaciones fueron intercambiadas."
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+document
+.getElementById(
+    "clearButton"
+)
+.addEventListener(
+    "click",
+    function(){
+
+        previousInput.value =
+            "";
+
+
+        currentInput.value =
+            "";
+
+
+        searchInput.value =
+            "";
+
+
+        results = {
+
+            previous:[],
+
+            current:[],
+
+            newCodes:[],
+
+            removed:[],
+
+            same:[],
+
+            duplicates:[]
+
+        };
+
+
+        updateCounters();
+
+
+        resultsSection.style.display =
+            "none";
+
+
+        emptyState.style.display =
+            "flex";
+
+
+        previousInput.focus();
+
+
+        toast(
+            "Información limpiada."
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   MAIN BUTTON
+========================================================= */
+
+document
+.getElementById(
+    "compareButton"
+)
+.addEventListener(
+    "click",
+    compare
+);
+
+
+
+/* =========================================================
+   CTRL ENTER
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            (
+                event.ctrlKey
+                ||
+                event.metaKey
+            )
+            &&
+            event.key === "Enter"
+        ){
+
+            compare();
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function toast(message){
+
+    const area =
+        document.getElementById(
+            "toastArea"
+        );
+
+
+    const element =
+        document.createElement(
+            "div"
+        );
+
+
+    element.className =
+        "toast";
+
+
+    element.textContent =
+        message;
+
+
+    area.appendChild(
+        element
+    );
+
+
+    setTimeout(
+        function(){
+
+            element.style.opacity =
+                "0";
+
+
+            element.style.transform =
+                "translateY(7px)";
+
+
+            element.style.transition =
+                "all .2s ease";
+
+
+            setTimeout(
+                function(){
+
+                    element.remove();
+
+                },
+                220
+            );
+
+        },
+        2500
+    );
+
+}
+
+
+
+/* =========================================================
+   START
+========================================================= */
+
+updateCounters();
+
+</script>
+
 </body>
 </html>
