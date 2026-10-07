@@ -7,36 +7,47 @@
 
   <style>
     :root{
-      --bg:#f5f7fb;
-      --surface:#ffffff;
-      --surface-soft:#f8fafc;
-      --border:#d9e2ec;
+      /* Paleta elegante / jurídica */
+      --bg:#eeebe5;
+      --bg-2:#e7e2da;
+      --surface:#f8f5f0;
+      --surface-2:#f3efe8;
+      --surface-3:#fcfaf7;
 
-      --text:#122033;
-      --text-soft:#526173;
-      --text-muted:#7b8794;
+      --border:#d9d1c6;
+      --border-soft:#e6ded2;
 
-      --primary:#1e4db7;
-      --primary-dark:#143b90;
-      --primary-soft:#eaf1ff;
+      --text:#1d2a3a;
+      --text-soft:#5f6b78;
+      --text-muted:#7c8791;
 
-      --success:#1f8a5b;
-      --success-soft:#ebfbf3;
+      --primary:#24364d;
+      --primary-2:#314863;
+      --primary-soft:#e6ebf1;
 
-      --danger:#c54646;
-      --danger-soft:#fff0f0;
+      --accent:#b59663;
+      --accent-soft:#efe5d4;
 
-      --warning:#b7791f;
-      --warning-soft:#fff8e8;
+      --success:#3f6b57;
+      --success-soft:#eaf3ee;
 
-      --keep:#6b46c1;
-      --keep-soft:#f3edff;
+      --danger:#8f4f4f;
+      --danger-soft:#f8ecec;
 
-      --shadow:0 12px 35px rgba(16,24,40,.08);
-      --shadow-soft:0 6px 20px rgba(16,24,40,.05);
+      --keep:#5c5875;
+      --keep-soft:#efedf6;
 
-      --radius:20px;
-      --radius-sm:14px;
+      --warning:#8b6742;
+      --warning-soft:#f6efe7;
+
+      --shadow-sm:0 8px 24px rgba(31,36,41,.05);
+      --shadow-md:0 18px 45px rgba(31,36,41,.08);
+      --shadow-lg:0 28px 60px rgba(31,36,41,.10);
+
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+      --radius-sm:12px;
     }
 
     *{
@@ -50,8 +61,11 @@
     body{
       margin:0;
       font-family:Inter, "Segoe UI", Arial, sans-serif;
-      background:linear-gradient(180deg,#f8fbff 0%, #f5f7fb 100%);
       color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(181,150,99,.08), transparent 26rem),
+        radial-gradient(circle at bottom right, rgba(36,54,77,.05), transparent 28rem),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
       min-height:100vh;
     }
 
@@ -70,14 +84,15 @@
       margin:0 auto;
     }
 
-    /* HEADER */
+    /* TOPBAR */
     .topbar{
       position:sticky;
       top:0;
       z-index:50;
-      background:rgba(255,255,255,.90);
+      background:rgba(248,245,240,.88);
       backdrop-filter:blur(14px);
-      border-bottom:1px solid rgba(217,226,236,.9);
+      border-bottom:1px solid rgba(217,209,198,.7);
+      box-shadow:0 2px 20px rgba(31,36,41,.03);
     }
 
     .topbar-inner{
@@ -95,15 +110,25 @@
     }
 
     .brand-icon{
-      width:50px;
-      height:50px;
-      border-radius:16px;
+      width:52px;
+      height:52px;
+      border-radius:18px;
       display:grid;
       place-items:center;
-      background:linear-gradient(135deg,var(--primary),#3d6ee0);
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
       color:#fff;
-      box-shadow:0 10px 24px rgba(30,77,183,.22);
-      flex:0 0 auto;
+      box-shadow:0 14px 28px rgba(36,54,77,.18);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .brand-icon::after{
+      content:"";
+      position:absolute;
+      inset:1px;
+      border-radius:17px;
+      border:1px solid rgba(255,255,255,.14);
+      pointer-events:none;
     }
 
     .brand-icon svg{
@@ -115,7 +140,7 @@
       font-size:30px;
       font-weight:800;
       letter-spacing:-0.03em;
-      line-height:1.1;
+      line-height:1.05;
     }
 
     .brand-subtitle{
@@ -124,103 +149,92 @@
       font-size:14px;
     }
 
-    .badge-safe{
+    .safe-badge{
       padding:10px 14px;
       border-radius:999px;
-      background:var(--surface-soft);
+      background:rgba(255,255,255,.5);
       border:1px solid var(--border);
       color:var(--text-soft);
       font-size:13px;
       font-weight:700;
       white-space:nowrap;
+      box-shadow:var(--shadow-sm);
     }
 
-    /* HERO */
-    .hero{
-      padding:34px 0 24px;
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:22px;
-      align-items:stretch;
+    /* APP INTRO SMALL */
+    .subheader{
+      padding:20px 0 12px;
     }
 
-    .hero-card{
-      background:var(--surface);
+    .subheader-card{
+      background:linear-gradient(180deg, rgba(248,245,240,.92), rgba(243,239,232,.95));
       border:1px solid var(--border);
-      border-radius:28px;
-      box-shadow:var(--shadow-soft);
-      padding:30px;
-    }
-
-    .hero-card h1{
-      margin:0 0 14px;
-      font-size:44px;
-      line-height:1.02;
-      letter-spacing:-0.04em;
-    }
-
-    .hero-card p{
-      margin:0;
-      font-size:18px;
-      line-height:1.7;
-      color:var(--text-soft);
-      max-width:800px;
-    }
-
-    .guide{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:14px;
-    }
-
-    .guide-step{
+      border-radius:24px;
+      padding:20px 22px;
+      box-shadow:var(--shadow-sm);
       display:flex;
-      gap:14px;
+      justify-content:space-between;
+      gap:18px;
       align-items:flex-start;
-      background:var(--surface-soft);
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:18px;
+      flex-wrap:wrap;
     }
 
-    .guide-number{
-      width:38px;
-      height:38px;
-      border-radius:12px;
-      background:var(--primary);
-      color:#fff;
-      display:grid;
-      place-items:center;
+    .subheader-title{
+      font-size:28px;
       font-weight:800;
-      font-size:16px;
-      flex:0 0 auto;
+      letter-spacing:-0.03em;
+      margin:0 0 6px;
     }
 
-    .guide-step strong{
-      display:block;
-      font-size:18px;
-      margin-bottom:4px;
-    }
-
-    .guide-step span{
+    .subheader-text{
+      margin:0;
       color:var(--text-soft);
-      font-size:15px;
-      line-height:1.6;
+      font-size:16px;
+      line-height:1.65;
+      max-width:860px;
     }
 
-    /* INPUT AREA */
+    .mini-tip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:14px;
+      background:var(--accent-soft);
+      color:#6d5836;
+      border:1px solid #e5d4b7;
+      font-size:13px;
+      font-weight:700;
+      box-shadow:var(--shadow-sm);
+    }
+
+    /* MAIN GRID */
     .compare-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:22px;
-      margin-top:10px;
+      margin-top:18px;
     }
 
     .card{
-      background:var(--surface);
+      background:linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
       border:1px solid var(--border);
-      border-radius:24px;
-      box-shadow:var(--shadow-soft);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow-sm);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      width:100%;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(181,150,99,.55), transparent);
+      opacity:.8;
+      pointer-events:none;
     }
 
     .input-card{
@@ -245,18 +259,20 @@
       color:var(--text-soft);
       margin-top:6px;
       font-size:15px;
-      line-height:1.5;
+      line-height:1.55;
+      max-width:540px;
     }
 
     .counter{
       background:var(--primary-soft);
-      color:var(--primary-dark);
-      border:1px solid #cfe0ff;
+      color:var(--primary);
+      border:1px solid #d1dbe6;
       border-radius:14px;
       padding:10px 14px;
       font-size:14px;
       font-weight:800;
       white-space:nowrap;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
     }
 
     textarea{
@@ -265,41 +281,44 @@
       resize:vertical;
       border:1px solid var(--border);
       border-radius:18px;
-      background:#fbfcfe;
+      background:linear-gradient(180deg, var(--surface-3) 0%, #f6f2ec 100%);
       padding:18px;
       font-size:16px;
-      line-height:1.7;
+      line-height:1.72;
       color:var(--text);
       outline:none;
       transition:.2s ease;
       font-family:Consolas, "Courier New", monospace;
+      box-shadow:inset 0 2px 10px rgba(31,36,41,.03);
     }
 
     textarea:focus{
-      background:#fff;
-      border-color:#a9c4ff;
-      box-shadow:0 0 0 4px rgba(30,77,183,.08);
+      background:#fffdfa;
+      border-color:#cab48c;
+      box-shadow:
+        0 0 0 4px rgba(181,150,99,.10),
+        inset 0 2px 10px rgba(31,36,41,.02);
     }
 
     textarea::placeholder{
-      color:#9ba6b2;
+      color:#96a0aa;
     }
 
     .helper{
-      margin-top:10px;
+      margin-top:12px;
       color:var(--text-muted);
       font-size:13px;
-      line-height:1.5;
+      line-height:1.55;
     }
 
-    /* ACTIONS */
+    /* ACTION BAR */
     .action-bar{
       margin:22px 0 28px;
       padding:18px;
       border:1px solid var(--border);
-      border-radius:22px;
-      background:var(--surface);
-      box-shadow:var(--shadow-soft);
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(248,245,240,.98), rgba(243,239,232,.98));
+      box-shadow:var(--shadow-sm);
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -326,6 +345,7 @@
       align-items:center;
       justify-content:center;
       gap:10px;
+      box-shadow:0 6px 18px rgba(31,36,41,.04);
     }
 
     .btn:hover{
@@ -333,21 +353,21 @@
     }
 
     .btn-primary{
-      background:linear-gradient(135deg,var(--primary),#2f67e8);
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
       color:#fff;
-      box-shadow:0 10px 24px rgba(30,77,183,.22);
+      box-shadow:0 14px 28px rgba(36,54,77,.18);
     }
 
     .btn-secondary{
-      background:#fff;
+      background:rgba(255,255,255,.7);
       color:var(--text);
       border:1px solid var(--border);
     }
 
     .btn-soft{
-      background:var(--surface-soft);
-      color:var(--text);
-      border:1px solid var(--border);
+      background:var(--accent-soft);
+      color:#6b5635;
+      border:1px solid #e5d4b7;
     }
 
     .btn svg{
@@ -357,12 +377,13 @@
 
     /* EMPTY */
     .empty{
-      border:2px dashed #d2dae5;
+      border:1px dashed #cdbfa9;
       border-radius:24px;
-      background:rgba(255,255,255,.72);
+      background:linear-gradient(180deg, rgba(248,245,240,.85), rgba(243,239,232,.88));
       text-align:center;
-      padding:50px 20px;
+      padding:52px 24px;
       margin-bottom:20px;
+      box-shadow:var(--shadow-sm);
     }
 
     .empty h3{
@@ -376,6 +397,8 @@
       color:var(--text-soft);
       font-size:17px;
       line-height:1.7;
+      max-width:760px;
+      margin-inline:auto;
     }
 
     /* RESULTS */
@@ -412,8 +435,22 @@
       padding:22px;
       border-radius:22px;
       border:1px solid var(--border);
-      background:var(--surface);
-      box-shadow:var(--shadow-soft);
+      background:linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+      box-shadow:var(--shadow-sm);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .metric::after{
+      content:"";
+      position:absolute;
+      right:-24px;
+      top:-24px;
+      width:80px;
+      height:80px;
+      border-radius:50%;
+      background:currentColor;
+      opacity:.045;
     }
 
     .metric-label{
@@ -437,11 +474,11 @@
       line-height:1.5;
     }
 
-    .m-current .metric-value{ color:var(--primary); }
-    .m-new .metric-value{ color:var(--success); }
-    .m-removed .metric-value{ color:var(--danger); }
-    .m-same .metric-value{ color:var(--keep); }
-    .m-duplicates .metric-value{ color:var(--warning); }
+    .m-current{ color:var(--primary); }
+    .m-new{ color:var(--success); }
+    .m-removed{ color:var(--danger); }
+    .m-same{ color:var(--keep); }
+    .m-duplicates{ color:var(--warning); }
 
     .summary-grid{
       display:grid;
@@ -454,8 +491,8 @@
       padding:24px;
       border-radius:22px;
       border:1px solid var(--border);
-      background:var(--surface);
-      box-shadow:var(--shadow-soft);
+      background:linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+      box-shadow:var(--shadow-sm);
     }
 
     .summary-title{
@@ -494,9 +531,10 @@
 
     .bar-track{
       height:12px;
-      background:#edf2f7;
+      background:#e7e0d6;
       border-radius:999px;
       overflow:hidden;
+      box-shadow:inset 0 1px 4px rgba(31,36,41,.05);
     }
 
     .bar-fill{
@@ -516,8 +554,11 @@
       flex-direction:column;
       justify-content:center;
       min-height:100%;
-      background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+      background:
+        radial-gradient(circle at top right, rgba(181,150,99,.12), transparent 9rem),
+        linear-gradient(135deg, var(--primary), var(--primary-2));
       color:#fff;
+      box-shadow:var(--shadow-md);
     }
 
     .highlight-label{
@@ -525,6 +566,7 @@
       font-weight:700;
       opacity:.92;
       margin-bottom:10px;
+      color:#e9dfd0;
     }
 
     .highlight-number{
@@ -539,6 +581,7 @@
       font-size:18px;
       font-weight:800;
       margin-bottom:16px;
+      color:#f0e7db;
     }
 
     .highlight-desc{
@@ -560,7 +603,7 @@
       flex-wrap:wrap;
       padding:18px;
       border-bottom:1px solid var(--border);
-      background:#fcfdff;
+      background:linear-gradient(180deg, rgba(248,245,240,.9), rgba(243,239,232,.95));
     }
 
     .tabs{
@@ -582,14 +625,15 @@
     }
 
     .tab:hover{
-      background:var(--surface-soft);
+      background:rgba(255,255,255,.55);
       color:var(--text);
     }
 
     .tab.active{
       background:var(--primary-soft);
-      color:var(--primary-dark);
-      border-color:#cfe0ff;
+      color:var(--primary);
+      border-color:#d1dbe6;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.55);
     }
 
     .tab small{
@@ -611,15 +655,17 @@
       padding:0 14px;
       border:1px solid var(--border);
       border-radius:14px;
-      background:#fff;
+      background:rgba(255,255,255,.7);
       outline:none;
       font-size:15px;
       color:var(--text);
+      box-shadow:inset 0 1px 3px rgba(31,36,41,.03);
     }
 
     .search:focus{
-      border-color:#a9c4ff;
-      box-shadow:0 0 0 4px rgba(30,77,183,.08);
+      border-color:#cab48c;
+      box-shadow:0 0 0 4px rgba(181,150,99,.10);
+      background:#fffdfa;
     }
 
     .icon-btn{
@@ -627,17 +673,18 @@
       height:46px;
       border-radius:14px;
       border:1px solid var(--border);
-      background:#fff;
+      background:rgba(255,255,255,.72);
       color:var(--text-soft);
       display:grid;
       place-items:center;
       transition:.18s ease;
+      box-shadow:0 4px 12px rgba(31,36,41,.03);
     }
 
     .icon-btn:hover{
       background:var(--primary-soft);
-      color:var(--primary-dark);
-      border-color:#cfe0ff;
+      color:var(--primary);
+      border-color:#d1dbe6;
     }
 
     .icon-btn svg{
@@ -659,7 +706,7 @@
       position:sticky;
       top:0;
       z-index:2;
-      background:#f8fbff;
+      background:#efe9df;
     }
 
     th{
@@ -674,14 +721,14 @@
 
     td{
       padding:16px 20px;
-      border-bottom:1px solid #edf2f7;
+      border-bottom:1px solid var(--border-soft);
       font-size:16px;
       color:var(--text);
-      background:#fff;
+      background:rgba(255,255,255,.4);
     }
 
     tbody tr:hover td{
-      background:#fbfdff;
+      background:rgba(255,255,255,.7);
     }
 
     .col-index{
@@ -693,7 +740,7 @@
       font-family:Consolas, "Courier New", monospace;
       font-weight:700;
       letter-spacing:.01em;
-      color:#0f274d;
+      color:#1d314d;
     }
 
     .status-badge{
@@ -704,6 +751,7 @@
       border-radius:999px;
       font-size:13px;
       font-weight:800;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
     }
 
     .status-badge::before{
@@ -739,6 +787,7 @@
       color:var(--text-soft);
       font-size:17px;
       padding:36px !important;
+      background:transparent !important;
     }
 
     .table-footer{
@@ -749,7 +798,8 @@
       flex-wrap:wrap;
       font-size:14px;
       color:var(--text-soft);
-      background:#fcfdff;
+      background:linear-gradient(180deg, rgba(248,245,240,.9), rgba(243,239,232,.95));
+      border-top:1px solid var(--border);
     }
 
     .footer-note{
@@ -772,13 +822,13 @@
     }
 
     .toast{
-      background:#132847;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
       color:#fff;
       font-size:15px;
       font-weight:700;
       padding:14px 16px;
       border-radius:14px;
-      box-shadow:0 18px 40px rgba(16,24,40,.22);
+      box-shadow:0 18px 40px rgba(31,36,41,.22);
       animation:fadeUp .25s ease;
       min-width:250px;
     }
@@ -802,10 +852,6 @@
     }
 
     @media (max-width: 920px){
-      .hero{
-        grid-template-columns:1fr;
-      }
-
       .compare-grid,
       .summary-grid{
         grid-template-columns:1fr;
@@ -829,20 +875,20 @@
         font-size:13px;
       }
 
-      .badge-safe{
+      .safe-badge{
         display:none;
       }
 
-      .hero-card{
-        padding:22px;
+      .subheader-card{
+        padding:18px;
       }
 
-      .hero-card h1{
-        font-size:34px;
+      .subheader-title{
+        font-size:24px;
       }
 
-      .hero-card p{
-        font-size:17px;
+      .subheader-text{
+        font-size:15px;
       }
 
       .compare-grid{
@@ -902,8 +948,8 @@
         font-size:22px;
       }
 
-      .hero-card h1{
-        font-size:30px;
+      .subheader-title{
+        font-size:22px;
       }
 
       .card-header{
@@ -935,49 +981,26 @@
 
         <div>
           <div class="brand-title">Comparador de Asignaciones</div>
-          <div class="brand-subtitle">Revisión clara de códigos entre un período anterior y el actual</div>
+          <div class="brand-subtitle">Revisión comparativa entre período anterior y actual</div>
         </div>
       </div>
 
-      <div class="badge-safe">Tus datos se procesan solo en tu navegador</div>
+      <div class="safe-badge">Procesamiento local · tus datos no salen del navegador</div>
     </div>
   </header>
 
   <main class="container">
-    <section class="hero">
-      <div class="hero-card">
-        <h1>Compara tus códigos de forma clara, rápida y fácil.</h1>
-        <p>
-          Pega los códigos de la asignación anterior y los de la asignación actual.
-          El sistema te mostrará de inmediato cuáles son nuevos, cuáles ya no aparecen,
-          cuáles continúan y si existen duplicados.
-        </p>
-      </div>
 
-      <div class="guide">
-        <div class="guide-step">
-          <div class="guide-number">1</div>
-          <div>
-            <strong>Pega la asignación anterior</strong>
-            <span>Copia y pega la primera lista desde Excel o desde cualquier documento.</span>
-          </div>
+    <section class="subheader">
+      <div class="subheader-card">
+        <div>
+          <h1 class="subheader-title">Cargue ambas listas y obtenga el resultado al instante.</h1>
+          <p class="subheader-text">
+            Pegue la asignación anterior y la asignación actual para identificar códigos nuevos, eliminados, vigentes y duplicados de forma clara y ordenada.
+          </p>
         </div>
 
-        <div class="guide-step">
-          <div class="guide-number">2</div>
-          <div>
-            <strong>Pega la asignación actual</strong>
-            <span>Ingresa la lista más reciente para compararla contra la anterior.</span>
-          </div>
-        </div>
-
-        <div class="guide-step">
-          <div class="guide-number">3</div>
-          <div>
-            <strong>Presiona “Comparar asignaciones”</strong>
-            <span>Verás un resumen con métricas y el listado filtrado de resultados.</span>
-          </div>
-        </div>
+        <div class="mini-tip">Consejo: puede pegar directamente una columna completa desde Excel.</div>
       </div>
     </section>
 
@@ -986,7 +1009,7 @@
         <div class="card-header">
           <div>
             <div class="card-title">Asignación anterior</div>
-            <div class="card-subtitle">Esta será la base de comparación.</div>
+            <div class="card-subtitle">Esta lista será utilizada como base de comparación.</div>
           </div>
 
           <div class="counter"><span id="previousCounter">0</span> registros</div>
@@ -995,7 +1018,7 @@
         <textarea
           id="previousInput"
           spellcheck="false"
-          placeholder="Pega aquí los códigos anteriores...
+          placeholder="Pegue aquí los códigos anteriores...
 
 Ejemplo:
 100001
@@ -1004,7 +1027,7 @@ Ejemplo:
 100004"></textarea>
 
         <div class="helper">
-          Puedes pegar una columna completa de Excel. También se aceptan datos separados por saltos de línea, comas, punto y coma o tabulaciones.
+          Se aceptan datos separados por líneas, comas, punto y coma o tabulaciones.
         </div>
       </article>
 
@@ -1012,7 +1035,7 @@ Ejemplo:
         <div class="card-header">
           <div>
             <div class="card-title">Asignación actual</div>
-            <div class="card-subtitle">Esta es la lista que deseas revisar.</div>
+            <div class="card-subtitle">Esta es la lista que desea revisar contra la anterior.</div>
           </div>
 
           <div class="counter"><span id="currentCounter">0</span> registros</div>
@@ -1021,7 +1044,7 @@ Ejemplo:
         <textarea
           id="currentInput"
           spellcheck="false"
-          placeholder="Pega aquí los códigos actuales...
+          placeholder="Pegue aquí los códigos actuales...
 
 Ejemplo:
 100001
@@ -1056,14 +1079,14 @@ Ejemplo:
     <section id="emptyState" class="empty">
       <h3>Aún no hay una comparación</h3>
       <p>
-        Ingresa ambas listas y presiona <strong>“Comparar asignaciones”</strong> para ver el resumen y el listado de diferencias.
+        Ingrese ambas listas y presione <strong>“Comparar asignaciones”</strong> para ver el resumen y el detalle de resultados.
       </p>
     </section>
 
     <section id="resultsSection">
       <div class="section-head">
         <h2>Resumen de resultados</h2>
-        <p>Este panel te muestra la comparación de códigos únicos entre ambas listas.</p>
+        <p>Comparación de códigos únicos entre ambas listas.</p>
       </div>
 
       <div class="metrics">
@@ -1102,7 +1125,7 @@ Ejemplo:
         <article class="summary-card">
           <div class="summary-title">Distribución visual</div>
           <div class="summary-text">
-            Esta vista te ayuda a entender de forma rápida el tamaño de cada grupo de resultados.
+            Vista rápida del tamaño de cada grupo de resultados.
           </div>
 
           <div class="bar-group">
@@ -1221,7 +1244,7 @@ Ejemplo:
     </section>
 
     <div class="footer-note">
-      Comparador de asignaciones · Diseño más claro, lectura más cómoda y datos procesados localmente.
+      Comparador de asignaciones · Interfaz sobria, lectura clara y procesamiento local.
     </div>
   </main>
 
